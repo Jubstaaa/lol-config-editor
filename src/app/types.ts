@@ -12,6 +12,9 @@ export interface Field {
   scale?: number;
   options?: { label: string; value: string }[];
   type: FieldType;
+  step?: number;
+  full?:boolean;
+  reverse?:boolean;
 }
 
 export interface Section {
@@ -33,4 +36,7 @@ export interface InputProps {
   isRequired?: boolean;
   scale?: number;
   options?: { label: string; value: string }[];
+  step?: number;
+  className?: string;
+  reverse?:boolean;
 }

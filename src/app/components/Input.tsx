@@ -18,6 +18,9 @@ function Input({
   type,
   scale = 1,
   options = [],
+  step = 1,
+  className,
+  reverse = false,
 }: InputProps) {
   const { values, setFieldValue } = useFormikContext<any>();
 
@@ -28,14 +31,21 @@ function Input({
         name={name}
         onChange={(value: number) => setFieldValue(name, value / scale)}
         label={placeholder || label}
+        step={step}
+        className={className}
       />
     );
   } else if (type === FieldType.Boolean) {
     return (
       <Switch
         name={name}
-        isSelected={get(values, name) === "1"}
-        onValueChange={(value) => setFieldValue(name, value ? "1" : "0")}
+        isSelected={
+          reverse ? get(values, name) === "0" : get(values, name) === "1"
+        }
+        onValueChange={(value) =>
+          setFieldValue(name, reverse ? (value ? "0" : "1") : value ? "1" : "0")
+        }
+        className={className}
       >
         {placeholder || label}
       </Switch>
