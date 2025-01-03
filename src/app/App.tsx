@@ -1,10 +1,12 @@
 import { FC } from "react";
+import { NextUIProvider } from "@nextui-org/react";
+import SettingsForm from "./components/SettingsForm";
 
 const App: FC = () => {
   return (
-    <div>
-      <h1 className="text-2xl text-red-500">Helo</h1>
-    </div>
+    <NextUIProvider disableAnimation disableRipple skipFramerMotionAnimations>
+      <SettingsForm />
+    </NextUIProvider>
   );
 };
 
