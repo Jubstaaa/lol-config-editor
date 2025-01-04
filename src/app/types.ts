@@ -29,6 +29,12 @@ export interface TabItem {
   sections: Section[];
 }
 
+export interface classNamesProps {
+  base?: string;
+  label?: string;
+  wrapper?: string;
+}
+
 export interface InputProps {
   name: string;
   placeholder?: string;
@@ -40,11 +46,12 @@ export interface InputProps {
   step?: number;
   className?: string;
   reverse?: boolean;
-  classNames?:SlotsToClasses<"base" | "label" | "icon" | "wrapper" | "hiddenInput">
+  classNames?: classNamesProps;
 }
 export interface KeybindingInputProps {
   placeholder?: string;
   label?: string;
+  className?: string;
   value: string;
   onChange: (value: string) => void;
 }
