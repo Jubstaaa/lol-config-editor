@@ -4,7 +4,7 @@ import SettingsForm from "./components/SettingsForm";
 
 const App: FC = () => {
   return (
-    <NextUIProvider disableAnimation disableRipple skipFramerMotionAnimations>
+    <NextUIProvider >
       <SettingsForm />
     </NextUIProvider>
   );

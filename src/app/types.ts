@@ -4,6 +4,7 @@ export enum FieldType {
   Number = "number",
   Select = "select",
   Boolean = "boolean",
+  KeybindingInput = "keybindingInput",
 }
 
 export interface Field {
@@ -13,8 +14,8 @@ export interface Field {
   options?: { label: string; value: string }[];
   type: FieldType;
   step?: number;
-  full?:boolean;
-  reverse?:boolean;
+  full?: boolean;
+  reverse?: boolean;
 }
 
 export interface Section {
@@ -38,5 +39,12 @@ export interface InputProps {
   options?: { label: string; value: string }[];
   step?: number;
   className?: string;
-  reverse?:boolean;
+  reverse?: boolean;
+  classNames?:SlotsToClasses<"base" | "label" | "icon" | "wrapper" | "hiddenInput">
+}
+export interface KeybindingInputProps {
+  placeholder?: string;
+  label?: string;
+  value: string;
+  onChange: (value: string) => void;
 }

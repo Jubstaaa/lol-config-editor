@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Checkbox,
   Input as NextUIInput,
   Select,
   SelectItem,
@@ -9,6 +10,7 @@ import {
 import { useFormikContext } from "formik";
 import { get } from "lodash";
 import { FieldType, InputProps } from "../types";
+import KeybindingInput from "./KeybindingInput";
 
 function Input({
   name,
@@ -20,6 +22,7 @@ function Input({
   options = [],
   step = 1,
   className,
+  classNames,
   reverse = false,
 }: InputProps) {
   const { values, setFieldValue } = useFormikContext<any>();
@@ -37,7 +40,7 @@ function Input({
     );
   } else if (type === FieldType.Boolean) {
     return (
-      <Switch
+      <Checkbox
         name={name}
         isSelected={
           reverse ? get(values, name) === "0" : get(values, name) === "1"
@@ -46,14 +49,17 @@ function Input({
           setFieldValue(name, reverse ? (value ? "0" : "1") : value ? "1" : "0")
         }
         className={className}
+        classNames={classNames}
       >
         {placeholder || label}
-      </Switch>
+      </Checkbox>
     );
   } else if (type === FieldType.Select) {
     return (
       <>
         <Select
+          disallowEmptySelection
+          disableAnimation
           selectionMode="single"
           label={placeholder || label}
           onChange={(e) => setFieldValue(name, e.target.value)}
@@ -65,8 +71,16 @@ function Input({
         </Select>
       </>
     );
+  } else if (type === FieldType.KeybindingInput) {
+    return (
+      <KeybindingInput
+        value={get(values, name)}
+        name={name}
+        onChange={(value: string) => setFieldValue(name, value)}
+        label={placeholder || label}
+      />
+    );
   }
-
   return (
     <NextUIInput
       value={get(values, name)}

@@ -2,10 +2,69 @@ import React from "react";
 import { Form, Formik, FormikHelpers, FormikValues } from "formik";
 import Input from "./Input";
 import PersistedSettings from "/Applications/League of Legends.app/Contents/LoL/Config/PersistedSettings.json";
-import { Card, CardBody, cn, Tab, Tabs } from "@nextui-org/react";
+import { Button, Card, CardBody, cn, Tab, Tabs } from "@nextui-org/react";
 import { FieldType, Field, TabItem } from "../types";
 
+const spellCastClassnames: {
+  base: string;
+  label: string;
+  wrapper: string;
+} = {
+  base: "m-0 -top-3 inline-flex w-full max-w-md bg-content1 hover:bg-content2 items-center justify-center cursor-pointer rounded-lg gap-2 py-1 px-4 border-2 border-transparent data-[selected=true]:border-primary",
+  label: "w-full",
+  wrapper: "mr-0",
+};
+
 const tabs: TabItem[] = [
+  {
+    label: "Video",
+    sections: [
+      {
+        label: "General",
+        fields: [
+          {
+            label: "Use Relative Team Colors",
+            type: FieldType.Boolean,
+            name: "files[0].sections[4].settings[12].value",
+          },
+          {
+            label: "Enable Screen Shake",
+            type: FieldType.Boolean,
+            name: "files[0].sections[4].settings[6].value",
+          },
+        ],
+      },
+      {
+        label: "Accessibility",
+        fields: [
+          {
+            label: "Color Level",
+            type: FieldType.Slider,
+            name: "files[0].sections[0].settings[3].value",
+            scale: 100,
+          },
+          {
+            label: "Color Gamma",
+            type: FieldType.Slider,
+            name: "files[0].sections[0].settings[2].value",
+            scale: 100,
+          },
+          {
+            label: "Color Brightness",
+            type: FieldType.Slider,
+            name: "files[0].sections[0].settings[0].value",
+            scale: 100,
+          },
+          {
+            label: "Color Contrast",
+            type: FieldType.Slider,
+            name: "files[0].sections[0].settings[1].value",
+            scale: 100,
+          },
+        ],
+      },
+    ],
+  },
   {
     label: "Sound",
     sections: [
@@ -58,7 +117,7 @@ const tabs: TabItem[] = [
             label: "Disable All Sound",
             type: FieldType.Boolean,
             name: "files[0].sections[4].settings[4].value",
-            reverse:true,
+            reverse: true,
           },
           {
             label: "Theme Music",
@@ -571,6 +630,14 @@ const tabs: TabItem[] = [
   },
 ];
 
+const quickCastAll = (state: boolean, setFieldValue: any) => {
+  const value: string = state ? "1" : "0";
+
+  for (let i = 0; i <= 12; i++) {
+    setFieldValue(`files[1].sections[2].settings[${i}].value`, value);
+  }
+};
+
 export default function SettingsForm() {
   return (
     <Formik
@@ -582,43 +649,257 @@ export default function SettingsForm() {
         console.log(values);
       }}
     >
-      <Form>
-        <Tabs isVertical>
-          {tabs.map((item, index) => (
-            <Tab key={index} title={item.label} className="w-full">
+      {({ setFieldValue }) => (
+        <Form>
+          <Tabs isVertical>
+            <Tab title="Hotkeys" className="w-full">
               <Card>
                 <CardBody>
-                  {item.sections.map((section, sectionIndex) => (
-                    <>
-                      <h2>{section.label}</h2>
-
-                      <div
-                        className={cn(
-                          "grid grid-cols-2 gap-3",
-                          section.className
-                        )}
-                        key={sectionIndex}
+                  <>
+                    <h2>Primary Hotkeys</h2>
+                    <div className="w-full flex items-center justify-center gap-3">
+                      <Button onPress={() => quickCastAll(true, setFieldValue)}>
+                        Quick Cast All
+                      </Button>
+                      <Button
+                        onPress={() => quickCastAll(false, setFieldValue)}
                       >
-                        {section.fields.map((field, fieldIndex) => (
-                          <Input
-                            key={fieldIndex}
-                            {...field}
-                            className={
-                              field.type === FieldType.Slider || field.full
-                                ? "col-span-full"
-                                : ""
-                            }
-                          />
-                        ))}
+                        Normal Cast All
+                      </Button>
+                    </div>
+                    <div className="flex gap-10 items-center">
+                      <div className="flex flex-col gap-1 items-start">
+                        <h3>Abilities</h3>
+                        <div className="flex gap-3">
+                          <div>
+                            <Input
+                              label="Spell 1 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[8].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[2].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                          <div>
+                            <Input
+                              label="Spell 2 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[9].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[3].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                          <div>
+                            <Input
+                              label="Spell 3 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[10].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[4].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                          <div>
+                            <Input
+                              label="Spell 4 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[11].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[5].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </>
-                  ))}
+                      <div className="flex flex-col gap-1 items-start">
+                        <h3>Summoner Spells</h3>
+                        <div className="flex gap-3">
+                          <div>
+                            <Input
+                              label="Summoner Spell 1 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[6].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[0].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                          <div>
+                            <Input
+                              label="Summoner Spell 2 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[7].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[1].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex gap-10 items-center">
+                      <div className="flex flex-col gap-1 items-start">
+                        <h3>Items</h3>
+                        <div className="flex gap-3">
+                          <div>
+                            <Input
+                              label="Item 1 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[159].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[6].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                          <div>
+                            <Input
+                              label="Item 2 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[160].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[7].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                          <div>
+                            <Input
+                              label="Item 3 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[161].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[8].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                          <div>
+                            <Input
+                              label="Item 4 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[162].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[9].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                          <div>
+                            <Input
+                              label="Item 5 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[163].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[10].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                          <div>
+                            <Input
+                              label="Item 6 (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[164].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[11].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-1 items-start">
+                        <h3>Trinket</h3>
+                        <div className="flex gap-3">
+                          <div>
+                            <Input
+                              label="Trinket (Primary)"
+                              type={FieldType.KeybindingInput}
+                              name="files[1].sections[0].settings[166].value"
+                            />
+                            <Input
+                              type={FieldType.Boolean}
+                              name="files[1].sections[2].settings[12].value"
+                              classNames={spellCastClassnames}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <h2>Quick Cast With Indicator</h2>
+                    <div className="flex flex-col gap-3">
+                      <Input
+                        label="Replace Quick Cast with Quick Cast With Indicator in the quickbind UI"
+                        type={FieldType.Boolean}
+                        name="files[0].sections[5].settings[50].value"
+                      />
+                      <Input
+                        label="Cast the pressed spell upon pressing another spell"
+                        type={FieldType.Boolean}
+                        name="files[0].sections[5].settings[51].value"
+                      />
+                    </div>
+                  </>
                 </CardBody>
               </Card>
             </Tab>
-          ))}
-        </Tabs>
-      </Form>
+            {tabs.map((item, index) => (
+              <Tab key={index} title={item.label} className="w-full">
+                <Card>
+                  <CardBody>
+                    {item.sections.map((section, sectionIndex) => (
+                      <>
+                        <h2>{section.label}</h2>
+
+                        <div
+                          className={cn(
+                            "grid grid-cols-2 gap-3",
+                            section.className
+                          )}
+                          key={sectionIndex}
+                        >
+                          {section.fields.map((field, fieldIndex) => (
+                            <Input
+                              key={fieldIndex}
+                              {...field}
+                              className={
+                                field.type === FieldType.Slider || field.full
+                                  ? "col-span-full"
+                                  : ""
+                              }
+                            />
+                          ))}
+                        </div>
+                      </>
+                    ))}
+                  </CardBody>
+                </Card>
+              </Tab>
+            ))}
+          </Tabs>
+        </Form>
+      )}
     </Formik>
   );
 }
