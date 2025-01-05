@@ -1,2 +1,18 @@
-// See the Electron documentation for details on how to use preload scripts:
-// https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
+import { contextBridge, ipcRenderer } from "electron";
+import { FormikValues } from "formik/dist";
+
+contextBridge.exposeInMainWorld("electron", {
+  checkDefaultPath: (): Promise<any> =>
+    ipcRenderer.invoke("check-default-path"),
+  selectFolder: (): Promise<any> => ipcRenderer.invoke("select-folder"),
+  saveConfig: (values: FormikValues, name: string): Promise<string> =>
+    ipcRenderer.invoke("save-config", values, name),
+  getSavedConfigs: (): Promise<{ name: string; path: string }[]> =>
+    ipcRenderer.invoke("get-saved-configs"),
+  deleteConfig: (filePath: string): Promise<boolean> =>
+    ipcRenderer.invoke("delete-config", filePath),
+  readConfig: (filePath: string): Promise<any> =>
+    ipcRenderer.invoke("read-config", filePath),
+  saveReadOnlyConfig: (configData: any, targetPath: string): Promise<any> =>
+    ipcRenderer.invoke("save-readonly-config", configData, targetPath),
+});

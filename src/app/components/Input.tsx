@@ -37,16 +37,19 @@ function Input({
   className,
   classNames,
   reverse = false,
+  ...props
 }: InputProps) {
   const { values, setFieldValue } = useFormikContext<any>();
   const [dotNotation] = useState<any>(
-    convertJSONPathToDotNotation(
-      JSONPath({
-        path: name,
-        json: values,
-        resultType: "path",
-      })[0]
-    )
+    name
+      ? convertJSONPathToDotNotation(
+          JSONPath({
+            path: name,
+            json: values,
+            resultType: "path",
+          })[0]
+        )
+      : ""
   );
 
   if (type === FieldType.Slider) {
@@ -111,11 +114,12 @@ function Input({
   return (
     <NextUIInput
       value={get(values, dotNotation)}
-      onChange={(value) => setFieldValue(dotNotation, value)}
+      onValueChange={(value) => setFieldValue(dotNotation, value)}
       isRequired={isRequired}
       label={placeholder || label}
       name={name}
       type={type || "text"}
+      {...props}
     />
   );
 }
