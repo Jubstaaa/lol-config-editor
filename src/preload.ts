@@ -13,6 +13,6 @@ contextBridge.exposeInMainWorld("electron", {
     ipcRenderer.invoke("delete-config", filePath),
   readConfig: (filePath: string): Promise<any> =>
     ipcRenderer.invoke("read-config", filePath),
-  saveReadOnlyConfig: (configData: any, targetPath: string): Promise<any> =>
-    ipcRenderer.invoke("save-readonly-config", configData, targetPath),
+  saveReadOnlyConfig: (configData: any): Promise<any> =>
+    ipcRenderer.invoke("save-readonly-config", configData),
 });

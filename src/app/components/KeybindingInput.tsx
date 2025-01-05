@@ -98,6 +98,7 @@ const KeybindingInput = ({
   return (
     <>
       <Button
+        radius="none"
         className={cn(
           "w-20 h-20 text-2xl break-words p-2 whitespace-normal block",
           className
@@ -133,10 +134,11 @@ const KeybindingInput = ({
               </ModalHeader>
               <ModalBody>{label || placeholder}</ModalBody>
               <ModalFooter>
-                <Button color="primary" onPress={unbindKey}>
+                <Button radius="none" color="primary" onPress={unbindKey}>
                   Unbind
                 </Button>
                 <Button
+                  radius="none"
                   color="danger"
                   variant="light"
                   onPress={() => {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Checkbox,
+  cn,
   Input as NextUIInput,
   Select,
   SelectItem,
@@ -55,6 +56,15 @@ function Input({
   if (type === FieldType.Slider) {
     return (
       <Slider
+        classNames={{
+          filler: "bg-transparent",
+          track: "border-s-none rounded-none h-5 border-x-[10px]",
+          thumb: "after:bg-primary after:shadow-none w-5 h-5",
+          label: "text-sm",
+          value: "text-sm",
+        }}
+        radius="none"
+        size="lg"
         value={get(values, dotNotation) * scale}
         name={name}
         label={placeholder || label}
@@ -66,6 +76,8 @@ function Input({
   } else if (type === FieldType.Boolean) {
     return (
       <Checkbox
+        radius="none"
+        icon={<></>}
         name={name}
         isSelected={
           reverse
@@ -79,7 +91,14 @@ function Input({
           )
         }
         className={className}
-        classNames={classNames}
+        classNames={{
+          ...classNames,
+          label: "text-sm",
+          wrapper: cn(
+            "group-data-[selected=true]:after:scale-80 before:border-primary/50",
+            classNames?.wrapper
+          ),
+        }}
       >
         {placeholder || label}
       </Checkbox>
@@ -88,6 +107,14 @@ function Input({
     return (
       <>
         <Select
+          classNames={{
+            popoverContent: "rounded-none p-0",
+            listbox: "p-0",
+            value: "text-center",
+          }}
+          size="sm"
+          radius="none"
+          labelPlacement="outside"
           disallowEmptySelection
           disableAnimation
           selectionMode="single"
@@ -96,7 +123,13 @@ function Input({
           selectedKeys={[get(values, dotNotation)]}
         >
           {options.map((item) => (
-            <SelectItem key={item.value}>{item.label}</SelectItem>
+            <SelectItem
+              className="rounded-none"
+              classNames={{ title: "text-center" }}
+              key={item.value}
+            >
+              {item.label}
+            </SelectItem>
           ))}
         </Select>
       </>
@@ -113,6 +146,9 @@ function Input({
   }
   return (
     <NextUIInput
+      radius="none"
+      labelPlacement="outside"
+      startContent={<></>}
       value={get(values, dotNotation)}
       onValueChange={(value) => setFieldValue(dotNotation, value)}
       isRequired={isRequired}

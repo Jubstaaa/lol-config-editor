@@ -7,6 +7,22 @@ import * as fs from "fs";
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
+const settingsPath = path.join(app.getPath("userData"), "settings.json");
+
+if (!fs.existsSync(settingsPath)) {
+  const defaultSettings = {
+    defaultPath:
+      "C:/Riot Games/League of Legends/Config/PersistedSettings.json",
+  };
+  fs.writeFileSync(
+    settingsPath,
+    JSON.stringify(defaultSettings, null, 2),
+    "utf-8"
+  );
+}
+
+const settings = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
@@ -15,8 +31,10 @@ if (require("electron-squirrel-startup")) {
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+    height: 800,
+    width: 1200,
+    resizable: false,
+    fullscreenable: false,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
@@ -28,7 +46,7 @@ const createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
 
 ipcMain.handle("read-config", async (event, filePath) => {
@@ -39,10 +57,12 @@ ipcMain.handle("read-config", async (event, filePath) => {
 });
 
 ipcMain.handle("check-default-path", () => {
-  const defaultPath =
-    "C:/Riot Games/League of Legends/Config/PersistedSettings.json";
-  if (fs.existsSync(defaultPath)) {
-    return JSON.parse(fs.readFileSync(defaultPath, "utf-8"));
+  // Dosya yoksa varsayılan ayarları oluştur
+
+  // Ayarları oku ve geri döndür
+  const settings = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
+  if (fs.existsSync(settings.defaultPath)) {
+    return JSON.parse(fs.readFileSync(settings.defaultPath, "utf-8"));
   }
   return null;
 });
@@ -62,17 +82,19 @@ ipcMain.handle("select-folder", async () => {
     );
 
     if (fs.existsSync(persistedSettingsPath)) {
-      return {
-        data: JSON.parse(fs.readFileSync(persistedSettingsPath, "utf-8")),
-        path: path.join(selectedPath, "Config", "PersistedSettings.json"),
-      };
-    } else {
-      throw new Error(
-        "Config file not found make sure you choose the correct folder!"
+      const settings = { defaultPath: persistedSettingsPath };
+      fs.writeFileSync(
+        settingsPath,
+        JSON.stringify(settings, null, 2),
+        "utf-8"
       );
+
+      return JSON.parse(fs.readFileSync(persistedSettingsPath, "utf-8"));
+    } else {
+      throw "Config file not found make sure you choose the correct folder!";
     }
   } else {
-    throw new Error("Folder selection canceled.");
+    throw "Folder selection canceled.";
   }
 });
 
@@ -89,25 +111,21 @@ ipcMain.handle("save-config", async (event, values, name) => {
   return filePath;
 });
 
-ipcMain.handle(
-  "save-readonly-config",
-  async (event, configData, targetPath) => {
-    try {
-      const fileName = `PersistedSettings.json`;
-      const savePath = path.join(path.dirname(targetPath), fileName);
-      fs.chmodSync(savePath, 0o666); // Geçici olarak yazılabilir yap
+ipcMain.handle("save-readonly-config", async (event, configData) => {
+  try {
+    fs.writeFileSync(
+      settings.defaultPath,
+      JSON.stringify(configData, null, 2),
+      "utf-8"
+    );
+    fs.chmodSync(settings.defaultPath, 0o444); // Read-only yap
 
-      fs.writeFileSync(savePath, JSON.stringify(configData, null, 2), "utf-8");
-
-      fs.chmodSync(savePath, 0o444);
-
-      return { success: true, path: savePath };
-    } catch (error) {
-      console.error("Error saving read-only config:", error);
-      return { success: false, error: error.message };
-    }
+    return { success: true, path: settings.defaultPath };
+  } catch (error) {
+    console.error("Error saving read-only config:", error);
+    return { success: false, error: error.message };
   }
-);
+});
 
 ipcMain.handle("get-saved-configs", () => {
   const savePath = path.join(app.getPath("userData"), "configs");

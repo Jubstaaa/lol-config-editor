@@ -6,9 +6,6 @@ import { FormikValues } from "formik/dist";
 
 const App: FC = () => {
   const [persistedSettings, setPersistedSettings] = useState<any>(null);
-  const [configPath, setConfigPath] = useState<string>(
-    "C:/Riot Games/League of Legends/Config/PersistedSettings.json"
-  );
 
   useEffect(() => {
     electron
@@ -25,8 +22,7 @@ const App: FC = () => {
 
   const handleSelectFolder = async () => {
     try {
-      const { data, path } = await electron.selectFolder();
-      setConfigPath(path);
+      const data = await electron.selectFolder();
       if (data) {
         setPersistedSettings(data);
       }
@@ -38,13 +34,13 @@ const App: FC = () => {
 
   return (
     <NextUIProvider>
-      <main className="p-10">
+      <main className="p-5">
         {!persistedSettings ? (
-          <Button onPress={handleSelectFolder}>
+          <Button radius="none" onPress={handleSelectFolder}>
             Select League of Legends folder
           </Button>
         ) : (
-          <SettingsForm data={persistedSettings} configPath={configPath} />
+          <SettingsForm data={persistedSettings} />
         )}
         <Toaster />
       </main>
