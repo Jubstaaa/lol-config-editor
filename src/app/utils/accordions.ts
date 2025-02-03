@@ -5,17 +5,29 @@ export const accordions = [
       {
         headers: ["Normal Cast", "Set 2"],
         columns: [
-          { label: "Spell 1", name: "files[1].sections[0].settings[41].value" },
-          { label: "Spell 2", name: "files[1].sections[0].settings[42].value" },
-          { label: "Spell 3", name: "files[1].sections[0].settings[43].value" },
-          { label: "Spell 4", name: "files[1].sections[0].settings[44].value" },
+          {
+            label: "Spell 1",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastSpell1')].value",
+          },
+          {
+            label: "Spell 2",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastSpell2')].value",
+          },
+          {
+            label: "Spell 3",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastSpell3')].value",
+          },
+          {
+            label: "Spell 4",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastSpell4')].value",
+          },
           {
             label: "Summoner Spell 1",
-            name: "files[1].sections[0].settings[33].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastAvatarSpell1')].value",
           },
           {
             label: "Summoner Spell 2",
-            name: "files[1].sections[0].settings[34].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastAvatarSpell2')].value",
           },
         ],
       },
@@ -25,27 +37,27 @@ export const accordions = [
         columns: [
           {
             label: "Spell 1",
-            name: "files[1].sections[0].settings[140].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastSpell1')].value",
           },
           {
             label: "Spell 2",
-            name: "files[1].sections[0].settings[141].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastSpell2')].value",
           },
           {
             label: "Spell 3",
-            name: "files[1].sections[0].settings[142].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastSpell3')].value",
           },
           {
             label: "Spell 4",
-            name: "files[1].sections[0].settings[143].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastSpell4')].value",
           },
           {
             label: "Summoner Spell 1",
-            name: "files[1].sections[0].settings[132].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastAvatarSpell1')].value",
           },
           {
             label: "Summoner Spell 2",
-            name: "files[1].sections[0].settings[133].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastAvatarSpell2')].value",
           },
         ],
       },
@@ -54,27 +66,27 @@ export const accordions = [
         columns: [
           {
             label: "Spell 1",
-            name: "files[1].sections[0].settings[153].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorSpell1')].value",
           },
           {
             label: "Spell 2",
-            name: "files[1].sections[0].settings[154].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorSpell2')].value",
           },
           {
             label: "Spell 3",
-            name: "files[1].sections[0].settings[155].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorSpell3')].value",
           },
           {
             label: "Spell 4",
-            name: "files[1].sections[0].settings[156].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorSpell4')].value",
           },
           {
             label: "Summoner Spell 1",
-            name: "files[1].sections[0].settings[145].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorAvatarSpell1')].value",
           },
           {
             label: "Summoner Spell 2",
-            name: "files[1].sections[0].settings[146].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorAvatarSpell2')].value",
           },
         ],
       },
@@ -83,27 +95,27 @@ export const accordions = [
         columns: [
           {
             label: "Spell 1",
-            name: "files[1].sections[0].settings[122].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastSpell1')].value",
           },
           {
             label: "Spell 2",
-            name: "files[1].sections[0].settings[123].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastSpell2')].value",
           },
           {
             label: "Spell 3",
-            name: "files[1].sections[0].settings[124].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastSpell3')].value",
           },
           {
             label: "Spell 4",
-            name: "files[1].sections[0].settings[125].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastSpell4')].value",
           },
           {
             label: "Summoner Spell 1",
-            name: "files[1].sections[0].settings[114].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastAvatarSpell1')].value",
           },
           {
             label: "Summoner Spell 2",
-            name: "files[1].sections[0].settings[115].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastAvatarSpell2')].value",
           },
         ],
       },
@@ -112,27 +124,27 @@ export const accordions = [
         columns: [
           {
             label: "Spell 1",
-            name: "files[1].sections[0].settings[166].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastSpell1')].value",
           },
           {
             label: "Spell 2",
-            name: "files[1].sections[0].settings[167].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastSpell2')].value",
           },
           {
             label: "Spell 3",
-            name: "files[1].sections[0].settings[168].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastSpell3')].value",
           },
           {
             label: "Spell 4",
-            name: "files[1].sections[0].settings[169].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastSpell4')].value",
           },
           {
             label: "Summoner Spell 1",
-            name: "files[1].sections[0].settings[159].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastAvatarSpell1')].value",
           },
           {
             label: "Summoner Spell 2",
-            name: "files[1].sections[0].settings[160].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastAvatarSpell2')].value",
           },
         ],
       },
@@ -141,27 +153,27 @@ export const accordions = [
         columns: [
           {
             label: "Spell 1",
-            name: "files[1].sections[0].settings[147].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorSpell1')].value",
           },
           {
             label: "Spell 2",
-            name: "files[1].sections[0].settings[148].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorSpell2')].value",
           },
           {
             label: "Spell 3",
-            name: "files[1].sections[0].settings[149].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorSpell3')].value",
           },
           {
             label: "Spell 4",
-            name: "files[1].sections[0].settings[150].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorSpell4')].value",
           },
           {
             label: "Summoner Spell 1",
-            name: "files[1].sections[0].settings[139].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorAvatarSpell1')].value",
           },
           {
             label: "Summoner Spell 2",
-            name: "files[1].sections[0].settings[140].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorAvatarSpell2')].value",
           },
         ],
       },
@@ -170,51 +182,51 @@ export const accordions = [
         columns: [
           {
             label: "Level Up Spell 1",
-            name: "files[1].sections[0].settings[23].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtLevelSpell1')].value",
           },
           {
             label: "Level Up Spell 2",
-            name: "files[1].sections[0].settings[24].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtLevelSpell2')].value",
           },
           {
             label: "Level Up Spell 3",
-            name: "files[1].sections[0].settings[25].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtLevelSpell3')].value",
           },
           {
             label: "Level Up Spell 4",
-            name: "files[1].sections[0].settings[26].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtLevelSpell4')].value",
           },
           {
             label: "Target Champions Only",
-            name: "files[1].sections[0].settings[13].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtChampionOnly')].value",
           },
           {
             label: "Teleport Home",
-            name: "files[1].sections[0].settings[165].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtUseItem7')].value",
           },
           {
             label: "Champion Specific Interaction 1",
-            name: "files[1].sections[0].settings[14].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtChampionSpecificInteractionButton1Click')].value",
           },
           {
             label: "Champion Specific Interaction 2",
-            name: "files[1].sections[0].settings[15].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtChampionSpecificInteractionButton2Click')].value",
           },
           {
             label: "Champion Specific Interaction 3",
-            name: "files[1].sections[0].settings[16].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtChampionSpecificInteractionButton3Click')].value",
           },
           {
             label: "Champion Specific Interaction 4",
-            name: "files[1].sections[0].settings[17].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtChampionSpecificInteractionButton4Click')].value",
           },
           {
             label: "Champion Specific Interaction 5",
-            name: "files[1].sections[0].settings[18].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtChampionSpecificInteractionButton5Click')].value",
           },
           {
             label: "Champion Specific Interaction 6",
-            name: "files[1].sections[0].settings[19].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtChampionSpecificInteractionButton6Click')].value",
           },
         ],
       },
@@ -226,13 +238,34 @@ export const accordions = [
       {
         headers: ["Normal Cast", "Set 2"],
         columns: [
-          { label: "Trinket", name: "files[1].sections[0].settings[45].value" },
-          { label: "Item 1", name: "files[1].sections[0].settings[35].value" },
-          { label: "Item 2", name: "files[1].sections[0].settings[36].value" },
-          { label: "Item 3", name: "files[1].sections[0].settings[37].value" },
-          { label: "Item 4", name: "files[1].sections[0].settings[38].value" },
-          { label: "Item 5", name: "files[1].sections[0].settings[39].value" },
-          { label: "Item 6", name: "files[1].sections[0].settings[40].value" },
+          {
+            label: "Trinket",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastVisionItem')].value",
+          },
+          {
+            label: "Item 1",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastItem1')].value",
+          },
+          {
+            label: "Item 2",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastItem2')].value",
+          },
+          {
+            label: "Item 3",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastItem3')].value",
+          },
+          {
+            label: "Item 4",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastItem4')].value",
+          },
+          {
+            label: "Item 5",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastItem5')].value",
+          },
+          {
+            label: "Item 6",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtNormalCastItem6')].value",
+          },
         ],
       },
       {
@@ -240,14 +273,32 @@ export const accordions = [
         columns: [
           {
             label: "Trinket",
-            name: "files[1].sections[0].settings[118].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastVisionItem')].value",
           },
-          { label: "Item 1", name: "files[1].sections[0].settings[109].value" },
-          { label: "Item 2", name: "files[1].sections[0].settings[110].value" },
-          { label: "Item 3", name: "files[1].sections[0].settings[111].value" },
-          { label: "Item 4", name: "files[1].sections[0].settings[112].value" },
-          { label: "Item 5", name: "files[1].sections[0].settings[113].value" },
-          { label: "Item 6", name: "files[1].sections[0].settings[114].value" },
+          {
+            label: "Item 1",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastItem1')].value",
+          },
+          {
+            label: "Item 2",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastItem2')].value",
+          },
+          {
+            label: "Item 3",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastItem3')].value",
+          },
+          {
+            label: "Item 4",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastItem4')].value",
+          },
+          {
+            label: "Item 5",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastItem5')].value",
+          },
+          {
+            label: "Item 6",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastItem6')].value",
+          },
         ],
       },
       {
@@ -255,14 +306,32 @@ export const accordions = [
         columns: [
           {
             label: "Trinket",
-            name: "files[1].sections[0].settings[131].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorVisionItem')].value",
           },
-          { label: "Item 1", name: "files[1].sections[0].settings[121].value" },
-          { label: "Item 2", name: "files[1].sections[0].settings[122].value" },
-          { label: "Item 3", name: "files[1].sections[0].settings[123].value" },
-          { label: "Item 4", name: "files[1].sections[0].settings[124].value" },
-          { label: "Item 5", name: "files[1].sections[0].settings[125].value" },
-          { label: "Item 6", name: "files[1].sections[0].settings[126].value" },
+          {
+            label: "Item 1",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorItem1')].value",
+          },
+          {
+            label: "Item 2",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorItem2')].value",
+          },
+          {
+            label: "Item 3",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorItem3')].value",
+          },
+          {
+            label: "Item 4",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorItem4')].value",
+          },
+          {
+            label: "Item 5",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorItem5')].value",
+          },
+          {
+            label: "Item 6",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartCastWithIndicatorItem6')].value",
+          },
         ],
       },
       {
@@ -270,14 +339,32 @@ export const accordions = [
         columns: [
           {
             label: "Trinket",
-            name: "files[1].sections[0].settings[100].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastVisionItem')].value",
           },
-          { label: "Item 1", name: "files[1].sections[0].settings[90].value" },
-          { label: "Item 2", name: "files[1].sections[0].settings[91].value" },
-          { label: "Item 3", name: "files[1].sections[0].settings[92].value" },
-          { label: "Item 4", name: "files[1].sections[0].settings[93].value" },
-          { label: "Item 5", name: "files[1].sections[0].settings[94].value" },
-          { label: "Item 6", name: "files[1].sections[0].settings[95].value" },
+          {
+            label: "Item 1",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastItem1')].value",
+          },
+          {
+            label: "Item 2",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastItem2')].value",
+          },
+          {
+            label: "Item 3",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastItem3')].value",
+          },
+          {
+            label: "Item 4",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastItem4')].value",
+          },
+          {
+            label: "Item 5",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastItem5')].value",
+          },
+          {
+            label: "Item 6",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelfCastItem6')].value",
+          },
         ],
       },
       {
@@ -285,14 +372,32 @@ export const accordions = [
         columns: [
           {
             label: "Trinket",
-            name: "files[1].sections[0].settings[144].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastVisionItem')].value",
           },
-          { label: "Item 1", name: "files[1].sections[0].settings[134].value" },
-          { label: "Item 2", name: "files[1].sections[0].settings[135].value" },
-          { label: "Item 3", name: "files[1].sections[0].settings[136].value" },
-          { label: "Item 4", name: "files[1].sections[0].settings[137].value" },
-          { label: "Item 5", name: "files[1].sections[0].settings[138].value" },
-          { label: "Item 6", name: "files[1].sections[0].settings[139].value" },
+          {
+            label: "Item 1",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastItem1')].value",
+          },
+          {
+            label: "Item 2",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastItem2')].value",
+          },
+          {
+            label: "Item 3",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastItem3')].value",
+          },
+          {
+            label: "Item 4",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastItem4')].value",
+          },
+          {
+            label: "Item 5",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastItem5')].value",
+          },
+          {
+            label: "Item 6",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastItem6')].value",
+          },
         ],
       },
       {
@@ -300,14 +405,32 @@ export const accordions = [
         columns: [
           {
             label: "Trinket",
-            name: "files[1].sections[0].settings[157].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorVisionItem')].value",
           },
-          { label: "Item 1", name: "files[1].sections[0].settings[147].value" },
-          { label: "Item 2", name: "files[1].sections[0].settings[148].value" },
-          { label: "Item 3", name: "files[1].sections[0].settings[149].value" },
-          { label: "Item 4", name: "files[1].sections[0].settings[150].value" },
-          { label: "Item 5", name: "files[1].sections[0].settings[151].value" },
-          { label: "Item 6", name: "files[1].sections[0].settings[152].value" },
+          {
+            label: "Item 1",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorItem1')].value",
+          },
+          {
+            label: "Item 2",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorItem2')].value",
+          },
+          {
+            label: "Item 3",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorItem3')].value",
+          },
+          {
+            label: "Item 4",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorItem4')].value",
+          },
+          {
+            label: "Item 5",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorItem5')].value",
+          },
+          {
+            label: "Item 6",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSmartPlusSelfCastWithIndicatorItem6')].value",
+          },
         ],
       },
     ],
@@ -320,31 +443,31 @@ export const accordions = [
         columns: [
           {
             label: "Player Move Click",
-            name: "files[1].sections[0].settings[54].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerMoveClick')].value",
           },
           {
             label: "Player Attack Move Click",
-            name: "files[1].sections[0].settings[50].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerAttackMoveClick')].value",
           },
           {
             label: "Player Attack Only Click",
-            name: "files[1].sections[0].settings[51].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerAttackOnlyClick')].value",
           },
           {
             label: "Player Attack Move",
-            name: "files[1].sections[0].settings[49].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerAttackMove')].value",
           },
           {
-            label: "Player Move Click",
-            name: "files[1].sections[0].settings[53].value",
+            label: "Player Hold Position",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerHoldPosition')].value",
           },
           {
             label: "Player Stop Position",
-            name: "files[1].sections[0].settings[66].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerStopPosition')].value",
           },
           {
             label: "Move Pet Click",
-            name: "files[1].sections[0].settings[48].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPetMoveClick')].value",
           },
         ],
       },
@@ -358,55 +481,55 @@ export const accordions = [
         columns: [
           {
             label: "Center Camera On Champion",
-            name: "files[1].sections[0].settings[5].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtCameraSnap')].value",
           },
           {
             label: "Select Self",
-            name: "files[1].sections[0].settings[89].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelectSelf')].value",
           },
           {
             label: "Select Ally 1",
-            name: "files[1].sections[0].settings[84].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelectAlly1')].value",
           },
           {
             label: "Select Ally 2",
-            name: "files[1].sections[0].settings[85].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelectAlly2')].value",
           },
           {
             label: "Select Ally 3",
-            name: "files[1].sections[0].settings[86].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelectAlly3')].value",
           },
           {
             label: "Select Ally 4",
-            name: "files[1].sections[0].settings[87].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSelectAlly4')].value",
           },
           {
             label: "Toggle Camera Lock",
-            name: "files[1].sections[0].settings[4].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtCameraLockToggle')].value",
           },
           {
             label: "Scroll Up",
-            name: "files[1].sections[0].settings[83].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtScrollUp')].value",
           },
           {
             label: "Scroll Down",
-            name: "files[1].sections[0].settings[80].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtScrollDown')].value",
           },
           {
             label: "Scroll Up",
-            name: "files[1].sections[0].settings[81].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtScrollLeft')].value",
           },
           {
             label: "Scroll Right",
-            name: "files[1].sections[0].settings[82].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtScrollRight')].value",
           },
           {
             label: "Drag Scroll",
-            name: "files[1].sections[0].settings[46].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtOnUIMouse4Pan')].value",
           },
           {
             label: "Drag Scroll Lock",
-            name: "files[1].sections[0].settings[21].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtDragScrollLock')].value",
           },
         ],
       },
@@ -420,27 +543,27 @@ export const accordions = [
         columns: [
           {
             label: "Show Health Bars",
-            name: "files[1].sections[0].settings[104].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='HUDEvents')].settings[?(@.name=='evtShowHealthBars')].value",
           },
           {
             label: "Toggle Minion Health Bars",
-            name: "files[1].sections[0].settings[164].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='HUDEvents')].settings[?(@.name=='evtToggleMinionHealthBars')].value",
           },
           {
             label: "Show Summoner Names",
-            name: "files[1].sections[0].settings[106].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='HUDEvents')].settings[?(@.name=='evtShowSummonerNames')].value",
           },
           {
             label: "Show/Hide HUD",
-            name: "files[1].sections[0].settings[22].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='HUDEvents')].settings[?(@.name=='evtDrawHud')].value",
           },
           {
             label: "Toggle FPS Display",
-            name: "files[1].sections[1].settings[2].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='HUDEvents')].settings[?(@.name=='evtToggleFPSAndLatency')].value",
           },
           {
             label: "Toggle Death Recap Showcase",
-            name: "files[1].sections[1].settings[1].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='HUDEvents')].settings[?(@.name=='evtToggleDeathRecapShowcase')].value",
           },
         ],
       },
@@ -454,19 +577,19 @@ export const accordions = [
         columns: [
           {
             label: "Alert Ping",
-            name: "files[1].sections[0].settings[1].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evntPlayerPingCursor')].value",
           },
           {
             label: "Quick Alert Ping",
-            name: "files[1].sections[0].settings[0].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evntPlayerPing')].value",
           },
           {
             label: "Caution Ping",
-            name: "files[1].sections[0].settings[2].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evntPlayerPingCursorDanger')].value",
           },
           {
             label: "Quick Caution Ping",
-            name: "files[1].sections[0].settings[3].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evntPlayerPingDanger')].value",
           },
         ],
       },
@@ -475,35 +598,35 @@ export const accordions = [
         columns: [
           {
             label: "On My Way Ping",
-            name: "files[1].sections[0].settings[61].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerPingOMW')].value",
           },
           {
             label: "Enemy Missing Ping",
-            name: "files[1].sections[0].settings[60].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerPingMIA')].value",
           },
           {
             label: "Retreat Ping",
-            name: "files[1].sections[0].settings[63].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerPingRadialDanger')].value",
           },
           {
             label: "Assist Me Ping",
-            name: "files[1].sections[0].settings[58].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerPingComeHere')].value",
           },
           {
             label: "Push Ping",
-            name: "files[1].sections[0].settings[62].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerPingPush')].value",
           },
           {
             label: "All In Ping",
-            name: "files[1].sections[0].settings[55].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerPingAllIn')].value",
           },
           {
             label: "Quick Enemy Vision Ping",
-            name: "files[1].sections[0].settings[56].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerPingAreaIsWarded')].value",
           },
           {
             label: "Need Vision Ping",
-            name: "files[1].sections[0].settings[65].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtPlayerPingVisionNeeded')].value",
           },
         ],
       },
@@ -512,35 +635,35 @@ export const accordions = [
         columns: [
           {
             label: "Joke",
-            name: "files[1].sections[0].settings[24].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtEmoteJoke')].value",
           },
           {
             label: "Taunt",
-            name: "files[1].sections[0].settings[26].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtEmoteTaunt')].value",
           },
           {
             label: "Dance",
-            name: "files[1].sections[0].settings[23].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtEmoteDance')].value",
           },
           {
             label: "Laugh",
-            name: "files[1].sections[0].settings[25].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtEmoteLaugh')].value",
           },
           {
             label: "Toggle",
-            name: "files[1].sections[0].settings[27].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtEmoteToggle')].value",
           },
           {
             label: "Mastery Emote",
-            name: "files[1].sections[0].settings[12].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtChampMasteryDisplay')].value",
           },
           {
             label: "Fist Bump",
-            name: "files[1].sections[0].settings[81].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtReciprocityTrigger')].value",
           },
           {
             label: "My Bad",
-            name: "files[1].sections[0].settings[80].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtReciprocityMyBadTrigger')].value",
           },
         ],
       },
@@ -549,47 +672,47 @@ export const accordions = [
         columns: [
           {
             label: "Open Emote Wheel",
-            name: "files[1].sections[0].settings[90].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmoteOpen')].value",
           },
           {
             label: "Quick Open Emote Wheel",
-            name: "files[1].sections[0].settings[91].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmoteInstantOpen')].value",
           },
           {
             label: "Quick Play Emote North",
-            name: "files[1].sections[0].settings[71].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmotePlaySlot0')].value",
           },
           {
             label: "Quick Play Emote Northeast",
-            name: "files[1].sections[0].settings[72].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmotePlaySlot1')].value",
           },
           {
             label: "Quick Play Emote East",
-            name: "files[1].sections[0].settings[73].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmotePlaySlot2')].value",
           },
           {
             label: "Quick Play Emote Southeast",
-            name: "files[1].sections[0].settings[74].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmotePlaySlot3')].value",
           },
           {
             label: "Quick Play Emote South",
-            name: "files[1].sections[0].settings[75].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmotePlaySlot4')].value",
           },
           {
             label: "Quick Play Emote Southwest",
-            name: "files[1].sections[0].settings[76].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmotePlaySlot5')].value",
           },
           {
             label: "Quick Play Emote West",
-            name: "files[1].sections[0].settings[77].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmotePlaySlot6')].value",
           },
           {
             label: "Quick Play Emote Northwest",
-            name: "files[1].sections[0].settings[78].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmotePlaySlot7')].value",
           },
           {
             label: "Quick Play Emote Center",
-            name: "files[1].sections[0].settings[79].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtRadialEmotePlaySlot8')].value",
           },
         ],
       },
@@ -598,7 +721,7 @@ export const accordions = [
         columns: [
           {
             label: "Chat History",
-            name: "files[1].sections[0].settings[20].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtChatHistory')].value",
           },
         ],
       },
@@ -612,27 +735,27 @@ export const accordions = [
         columns: [
           {
             label: "Show Scoreboard",
-            name: "files[1].sections[0].settings[107].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtShowScoreBoard')].value",
           },
           {
             label: "Show Scoreboard (Hold)",
-            name: "files[1].sections[1].settings[0].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='HUDEvents')].settings[?(@.name=='evtHoldShowScoreBoard')].value",
           },
           {
             label: "Toggle Mouse Screen Lock",
-            name: "files[1].sections[1].settings[3].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='HUDEvents')].settings[?(@.name=='evtToggleMouseClip')].value",
           },
           {
             label: "System Menu",
-            name: "files[1].sections[0].settings[162].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtSysMenu')].value",
           },
           {
             label: "Show Advanced Player Stats",
-            name: "files[1].sections[0].settings[105].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtShowCharacterMenu')].value",
           },
           {
             label: "Toggle Basic Player Stats",
-            name: "files[1].sections[1].settings[4].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='HUDEvents')].settings[?(@.name=='evtTogglePlayerStats')].value",
           },
         ],
       },
@@ -646,15 +769,15 @@ export const accordions = [
         columns: [
           {
             label: "Open Shop",
-            name: "files[1].sections[0].settings[47].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtOpenShop')].value",
           },
           {
             label: "Focus Shop Search Bar",
-            name: "files[1].sections[3].settings[0].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='ShopEvents')].settings[?(@.name=='evtShopFocusSearch')].value",
           },
           {
             label: "Switch Shop Tabs",
-            name: "files[1].sections[3].settings[1].value",
+            name: "$.files[?(@.name=='Input.ini')].sections[?(@.name=='ShopEvents')].settings[?(@.name=='evtShopSwitchTabs')].value",
           },
         ],
       },

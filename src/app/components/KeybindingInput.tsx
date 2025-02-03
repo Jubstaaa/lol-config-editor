@@ -24,7 +24,7 @@ const KeybindingInput = ({
   const [pressedKeys, setPressedKeys] = useState<string[]>([]);
 
   useEffect(() => {
-    if (!isOpen) return; // Eğer isOpen false ise hiçbir şey yapma
+    if (!isOpen) return;
 
     const getKeyLabel = (key: string): string => {
       if (key === " ") return "Space";
@@ -106,23 +106,21 @@ const KeybindingInput = ({
         onPress={onOpen}
       >
         {value
-          .split(",") // Virgüllerden ayır
-          .map(
-            (part) =>
-              !part.includes("Unbound") && !part.includes("null") // Eğer "Unbound" içermiyorsa işle
-                ? part
-                    .split(/\]\[/) // Köşeli parantezler arasından parçala
-                    .map(
-                      (item) =>
-                        item
-                          .replace(/[\[\]]/g, "") // Köşeli parantezleri kaldır
-                          .toLowerCase()
-                          .replace(/^\w/, (char) => char.toUpperCase()) // İlk harfi büyük yap
-                    )
-                    .join(" ") // Parçaları boşluk ile birleştir
-                : "" // "Unbound" varsa boş string döndür
+          .split(",")
+          .map((part) =>
+            !part.includes("Unbound") && !part.includes("null")
+              ? part
+                  .split(/\]\[/)
+                  .map((item) =>
+                    item
+                      .replace(/[\[\]]/g, "")
+                      .toLowerCase()
+                      .replace(/^\w/, (char) => char.toUpperCase())
+                  )
+                  .join(" ")
+              : ""
           )
-          .filter((item) => item !== "") // Boş değerleri kaldır
+          .filter((item) => item !== "")
           .join(" | ")}
       </Button>
       <Modal disableAnimation isOpen={isOpen} onOpenChange={onOpenChange}>

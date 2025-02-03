@@ -57,9 +57,6 @@ ipcMain.handle("read-config", async (event, filePath) => {
 });
 
 ipcMain.handle("check-default-path", () => {
-  // Dosya yoksa varsayılan ayarları oluştur
-
-  // Ayarları oku ve geri döndür
   const settings = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
   if (fs.existsSync(settings.defaultPath)) {
     return JSON.parse(fs.readFileSync(settings.defaultPath, "utf-8"));
@@ -104,7 +101,7 @@ ipcMain.handle("save-config", async (event, values, name) => {
     fs.mkdirSync(savePath);
   }
 
-  const fileName = `${name || `config-${Date.now()}`}.json`; // Kullanıcı adı veya benzersiz ad
+  const fileName = `${name || `config-${Date.now()}`}.json`;
   const filePath = path.join(savePath, fileName);
 
   fs.writeFileSync(filePath, JSON.stringify(values, null, 2), "utf-8");
@@ -113,14 +110,20 @@ ipcMain.handle("save-config", async (event, values, name) => {
 
 ipcMain.handle("save-readonly-config", async (event, configData) => {
   try {
-    fs.writeFileSync(
-      settings.defaultPath,
-      JSON.stringify(configData, null, 2),
-      "utf-8"
-    );
-    fs.chmodSync(settings.defaultPath, 0o444); // Read-only yap
+    const filePath = settings.defaultPath;
 
-    return { success: true, path: settings.defaultPath };
+    const stats = fs.statSync(filePath);
+    const isReadOnly = !(stats.mode & fs.constants.W_OK);
+
+    if (isReadOnly) {
+      fs.chmodSync(filePath, 0o666);
+    }
+
+    fs.writeFileSync(filePath, JSON.stringify(configData, null, 2), "utf-8");
+
+    fs.chmodSync(filePath, 0o444);
+
+    return { success: true, path: filePath };
   } catch (error) {
     console.error("Error saving read-only config:", error);
     return { success: false, error: error.message };

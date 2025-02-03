@@ -16,14 +16,14 @@ import { get } from "lodash";
 
 function convertJSONPathToDotNotation(jsonPath: string) {
   return jsonPath
-    .replace(/\$\['/g, "") // Başlangıçtaki $[' ifadesini kaldır
-    .replace(/\['/g, ".") // Köşeli parantez ve tek tırnakları kaldır
-    .replace(/'\]/g, "") // Kapalı köşeli parantezi kaldır
-    .replace(/\]\['/g, "][") // Aradaki köşeli parantezleri noktaya çevir
-    .replace(/\['/g, "[") // Açık köşeli parantezi noktaya çevir
-    .replace(/\]/g, "]") // Kapalı köşeli parantezi kaldır
-    .replace(/\.([^\d\[\]]+)\]/g, ".$1") // Sayı olmayanları nokta ile ayır
-    .replace(/\]\./g, "]."); // Sayı olanları olduğu gibi bırak
+    .replace(/\$\['/g, "")
+    .replace(/\['/g, ".")
+    .replace(/'\]/g, "")
+    .replace(/\]\['/g, "][")
+    .replace(/\['/g, "[")
+    .replace(/\]/g, "]")
+    .replace(/\.([^\d[\]]+)\]/g, ".$1")
+    .replace(/\]\./g, "].");
 }
 
 function Input({
@@ -48,7 +48,7 @@ function Input({
             path: name,
             json: values,
             resultType: "path",
-          })[0]
+          })[0] || ""
         )
       : ""
   );
@@ -137,7 +137,7 @@ function Input({
   } else if (type === FieldType.KeybindingInput) {
     return (
       <KeybindingInput
-        value={get(values, dotNotation)}
+        value={get(values, dotNotation) || ""}
         onChange={(value: string) => setFieldValue(dotNotation, value)}
         label={placeholder || label}
         className={className}

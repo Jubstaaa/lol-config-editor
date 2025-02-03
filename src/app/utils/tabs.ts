@@ -101,13 +101,13 @@ export const tabs: TabItem[] = [
           {
             label: "Disable All Sound",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[4].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='EnableAudio')].value",
             reverse: true,
           },
           {
             label: "Theme Music",
             type: FieldType.Select,
-            name: "files[0].sections[4].settings[16].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='ThemeMusic')].value",
             options: [
               {
                 label: "Updated",
@@ -129,48 +129,48 @@ export const tabs: TabItem[] = [
           {
             label: "Hud Scale",
             type: FieldType.Slider,
-            name: "files[0].sections[5].settings[15].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='GlobalScale')].value",
             scale: 100,
           },
           {
             label: "Cursor Scale",
             type: FieldType.Slider,
-            name: "files[0].sections[4].settings[3].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='CursorScale')].value",
             scale: 100,
           },
           {
             label: "Shop Scale",
             type: FieldType.Slider,
-            name: "files[0].sections[5].settings[31].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShopScale')].value",
             scale: 100,
           },
           {
             label: "Chat Scale",
             type: FieldType.Slider,
-            name: "files[0].sections[5].settings[3].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ChatScale')].value",
           },
           {
             label: "Minimap Scale",
             type: FieldType.Slider,
-            name: "files[0].sections[5].settings[24].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='MinimapScale')].value",
             scale: 33.3,
           },
           {
             label: "Objective Planning Scale",
             type: FieldType.Slider,
-            name: "files[0].sections[5].settings[28].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ObjectiveVoteScale')].value",
             scale: 100,
           },
           {
             label: "Death Recap Scale",
             type: FieldType.Slider,
-            name: "files[0].sections[5].settings[4].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='DeathRecapScale')].value",
             scale: 100,
           },
           {
             label: "Practice Tool Scale",
             type: FieldType.Slider,
-            name: "files[0].sections[5].settings[29].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='PracticeToolScale')].value",
             scale: 100,
           },
         ],
@@ -182,27 +182,27 @@ export const tabs: TabItem[] = [
           {
             label: "Show Health Bars",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[6].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='DrawHealthBars')].value",
           },
           {
             label: "Show Loss of Control UI",
             type: FieldType.Boolean,
-            name: "files[0].sections[7].settings[0].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='LossOfControl')].settings[?(@.name=='LossOfControlEnabled')].value",
           },
           {
             label: "Enable HUD Animations",
             type: FieldType.Boolean,
-            name: "files[0].sections[8].settings[0].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='Performance')].settings[?(@.name=='EnableHUDAnimations')].value",
           },
           {
             label: "Show Health Bar Animations",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[38].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowHealthBarShake')].value",
           },
           {
             label: "Show Names Above Healthbar",
             type: FieldType.Select,
-            name: "files[0].sections[5].settings[46].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowSummonerNames')].value",
             options: [
               {
                 label: "None",
@@ -226,17 +226,17 @@ export const tabs: TabItem[] = [
           {
             label: "Screen Flash on Damage",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[12].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='FlashScreenWhenDamaged')].value",
           },
           {
             label: "Screen Flash on Loss of Control",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[13].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='FlashScreenWhenStunned')].value",
           },
           {
             label: "Show Off-Screen Pings",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[40].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowOffScreenPointsOfInterest')].value",
           },
         ],
       },
@@ -246,7 +246,7 @@ export const tabs: TabItem[] = [
           {
             label: "Enable Legacy Cursor",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[2].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='CursorOverride')].value",
           },
         ],
       },
@@ -256,37 +256,37 @@ export const tabs: TabItem[] = [
           {
             label: "Show Target Frame on Attack",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[0].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='AutoDisplayTarget')].value",
           },
           {
             label: "Enable Line Missile Display",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[10].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='EnableLineMissileVis')].value",
           },
           {
             label: "Show Attack Range",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[35].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowAttackRadius')].value",
           },
           {
             label: "Disable Spell Hud Click",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[5].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='DisableHudSpellClick')].value",
           },
           {
             label: "Show Spell Costs",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[43].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowSpellCosts')].value",
           },
           {
             label: "Show Spell Recommendation",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[44].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowSpellRecommendations')].value",
           },
           {
             label: "Ability Cooldown Display",
             type: FieldType.Select,
-            name: "files[0].sections[5].settings[27].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='NumericCooldownFormat')].value",
             options: [
               {
                 label: "None",
@@ -314,17 +314,17 @@ export const tabs: TabItem[] = [
           {
             label: "Show Neutral Camps",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[39].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowNeutralCamps')].value",
           },
           {
             label: "Show Minimap on Left",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[14].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='FlipMiniMap')].value",
           },
           {
             label: "Allow Minimap Movement",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[23].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='MinimapMoveSelf')].value",
           },
         ],
       },
@@ -334,12 +334,12 @@ export const tabs: TabItem[] = [
           {
             label: "Mirror Scoreboard Layout",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[25].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='MirroredScoreboard')].value",
           },
           {
             label: "Show Summoner Names",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[47].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowSummonerNamesInScoreboard')].value",
           },
         ],
       },
@@ -349,7 +349,7 @@ export const tabs: TabItem[] = [
           {
             label: "Show Team Frames on Left",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[48].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowTeamFramesOnLeft')].value",
           },
         ],
       },
@@ -359,7 +359,7 @@ export const tabs: TabItem[] = [
           {
             label: "Change Chat Visibility",
             type: FieldType.Select,
-            name: "files[0].sections[5].settings[2].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ChatChannelVisibility')].value",
             options: [
               {
                 label: "Premade Only (Party)",
@@ -378,7 +378,7 @@ export const tabs: TabItem[] = [
           {
             label: "Show Timestamps",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[49].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ShowTimestamps')].value",
           },
         ],
       },
@@ -388,7 +388,7 @@ export const tabs: TabItem[] = [
           {
             label: "Emote Bubble Display",
             type: FieldType.Select,
-            name: "files[0].sections[5].settings[7].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='EmotePopupUIDisplayMode')].value",
             options: [
               {
                 label: "On",
@@ -407,12 +407,12 @@ export const tabs: TabItem[] = [
           {
             label: "Mute Enemy Emotes",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[16].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='HideEnemySummonerEmotes')].value",
           },
           {
             label: "Emote Size",
             type: FieldType.Select,
-            name: "files[0].sections[5].settings[8].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='EmoteSize')].value",
             options: [
               {
                 label: "Normal",
@@ -432,62 +432,62 @@ export const tabs: TabItem[] = [
           {
             label: "Damage",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[0].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='Damage_Enabled')].value",
           },
           {
             label: "Heal",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[5].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='Heal_Enabled')].value",
           },
           {
             label: "Gold",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[4].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='Gold_Enabled')].value",
           },
           {
             label: "Status",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[6].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='Invulnerable_Enabled')].value",
           },
           {
             label: "Quest",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[9].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='QuestReceived_Enabled')].value",
           },
           {
             label: "Mana",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[8].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='ManaDamage_Enabled')].value",
           },
           {
             label: "Enemy Damage",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[2].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='EnemyDamage_Enabled')].value",
           },
           {
             label: "Dodge",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[1].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='Dodge_Enabled')].value",
           },
           {
             label: "Level",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[7].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='Level_Enabled')].value",
           },
           {
             label: "Special",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[11].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='Special_Enabled')].value",
           },
           {
             label: "Score",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[10].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='Score_Enabled')].value",
           },
           {
             label: "Experience",
             type: FieldType.Boolean,
-            name: "files[0].sections[3].settings[3].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='FloatingText')].settings[?(@.name=='Experience_Enabled')].value",
           },
         ],
       },
@@ -497,7 +497,7 @@ export const tabs: TabItem[] = [
           {
             label: "Mute Reaction",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[18].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='HideReciprocityFist')].value",
           },
         ],
       },
@@ -512,48 +512,48 @@ export const tabs: TabItem[] = [
           {
             label: "Use Software Mouse (Vertical Sync must be off)",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[9].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='OSXMouseAcceleration')].value",
             full: true,
           },
           {
             label: "Mouse Speed",
             type: FieldType.Slider,
-            name: "files[0].sections[4].settings[8].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='GameMouseSpeed')].value",
             scale: 5,
             step: 5,
           },
           {
             label: "Camera Move Speed (Mouse)",
             type: FieldType.Slider,
-            name: "files[0].sections[5].settings[20].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='MapScrollSpeed')].value",
             scale: 100,
           },
           {
             label: "Camera Move Speed (Keyboard)",
             type: FieldType.Slider,
-            name: "files[0].sections[5].settings[19].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='KeyboardScrollSpeed')].value",
             scale: 100,
           },
           {
             label: "Move Camera On Revive",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[14].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='SnapCameraOnRespawn')].value",
           },
           {
             label: "Enable Smooth Camera",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[30].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='ScrollSmoothingEnabled')].value",
           },
           {
             label: "Mouse Button Drag Scroll",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[21].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='MiddleClickDragScrollEnabled')].value",
             full: true,
           },
           {
             label: "Camera Lock Mode",
             type: FieldType.Select,
-            name: "files[0].sections[5].settings[1].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='CameraLockMode')].value",
             options: [
               {
                 label: "Per-Side Offset",
@@ -577,37 +577,37 @@ export const tabs: TabItem[] = [
           {
             label: "Auto Attack",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[7].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='EnableTargetedAttackMove')].value",
           },
           {
             label: "Use Movement Prediction",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[10].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='PredictMovement')].value",
           },
           {
             label: "Show Turret Range Indicators (Coop vs AI)",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[13].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='ShowTurretRangeIndicators')].value",
           },
           {
             label: "Attack Move on Cursor",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[7].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='EnableTargetedAttackMove')].value",
           },
           {
             label: "Treat 'Target Champions Only' as a toggle",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[15].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='TargetChampionsOnlyAsToggle')].value",
           },
           {
             label: "Display Recommended Jungle Path",
             type: FieldType.Boolean,
-            name: "files[0].sections[4].settings[11].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='General')].settings[?(@.name=='RecommendJunglePaths')].value",
           },
           {
             label: "Enable Item Component Purchasing",
             type: FieldType.Boolean,
-            name: "files[0].sections[5].settings[9].value",
+            name: "$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='RecommendJunglePaths')].value",
           },
         ],
       },

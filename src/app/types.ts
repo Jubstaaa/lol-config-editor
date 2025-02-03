@@ -36,7 +36,7 @@ export interface classNamesProps {
 }
 
 export interface InputProps {
-  name: string;
+  name?: string;
   placeholder?: string;
   label?: string;
   type?: FieldType;
@@ -47,6 +47,8 @@ export interface InputProps {
   className?: string;
   reverse?: boolean;
   classNames?: classNamesProps;
+  value?: string;
+  onValueChange?: (value: string) => void;
 }
 export interface KeybindingInputProps {
   placeholder?: string;

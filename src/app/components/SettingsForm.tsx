@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Form, Formik, FormikHelpers, FormikValues } from "formik";
 import Input from "./Input";
-import { FaTrash } from "react-icons/fa"; // FontAwesome'dan örnek
+import { FaTrash } from "react-icons/fa";
+const electron = window.electron;
 
 import {
   Accordion,
@@ -44,8 +45,6 @@ const spellCastClassnames: {
 
 const keybindingClassname = "w-full h-7 text-base rounded-none p-0.5";
 
-// TODO - Update names.
-
 const quickCastAll = (state: boolean, setFieldValue: any) => {
   const value: string = state ? "1" : "0";
 
@@ -82,7 +81,7 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
       onSubmit={async (values) => {
         console.log(values);
         await electron.saveConfig(values, configName.trim() || undefined);
-        loadSavedConfigs(); // Listeyi güncelle
+        loadSavedConfigs();
         setConfigName("");
         toast.success("Config saved successfully!");
       }}
@@ -119,11 +118,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                             <Input
                               label="Spell 1 (Primary)"
                               type={FieldType.KeybindingInput}
-                              name="files[1].sections[0].settings[8].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtCastSpell1')].value"
                             />
                             <Input
                               type={FieldType.Boolean}
-                              name="files[1].sections[2].settings[2].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtCastSpell1smart')].value"
                               classNames={spellCastClassnames}
                             />
                           </div>
@@ -131,11 +130,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                             <Input
                               label="Spell 2 (Primary)"
                               type={FieldType.KeybindingInput}
-                              name="files[1].sections[0].settings[9].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtCastSpell2')].value"
                             />
                             <Input
                               type={FieldType.Boolean}
-                              name="files[1].sections[2].settings[3].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtCastSpell2smart')].value"
                               classNames={spellCastClassnames}
                             />
                           </div>
@@ -143,11 +142,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                             <Input
                               label="Spell 3 (Primary)"
                               type={FieldType.KeybindingInput}
-                              name="files[1].sections[0].settings[10].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtCastSpell3')].value"
                             />
                             <Input
                               type={FieldType.Boolean}
-                              name="files[1].sections[2].settings[4].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtCastSpell3smart')].value"
                               classNames={spellCastClassnames}
                             />
                           </div>
@@ -155,11 +154,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                             <Input
                               label="Spell 4 (Primary)"
                               type={FieldType.KeybindingInput}
-                              name="files[1].sections[0].settings[11].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtCastSpell4')].value"
                             />
                             <Input
                               type={FieldType.Boolean}
-                              name="files[1].sections[2].settings[5].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtCastSpell4smart')].value"
                               classNames={spellCastClassnames}
                             />
                           </div>
@@ -175,11 +174,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                             <Input
                               label="Summoner Spell 1 (Primary)"
                               type={FieldType.KeybindingInput}
-                              name="files[1].sections[0].settings[6].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtCastAvatarSpell1')].value"
                             />
                             <Input
                               type={FieldType.Boolean}
-                              name="files[1].sections[2].settings[0].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtCastAvatarSpell1smart')].value"
                               classNames={spellCastClassnames}
                             />
                           </div>
@@ -187,11 +186,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                             <Input
                               label="Summoner Spell 2 (Primary)"
                               type={FieldType.KeybindingInput}
-                              name="files[1].sections[0].settings[7].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtCastAvatarSpell2')].value"
                             />
                             <Input
                               type={FieldType.Boolean}
-                              name="files[1].sections[2].settings[1].value"
+                              name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtCastAvatarSpell2smart')].value"
                               classNames={spellCastClassnames}
                             />
                           </div>
@@ -207,11 +206,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                           <Input
                             label="Item 1 (Primary)"
                             type={FieldType.KeybindingInput}
-                            name="files[1].sections[0].settings[191].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtUseItem1')].value"
                           />
                           <Input
                             type={FieldType.Boolean}
-                            name="files[1].sections[2].settings[6].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtUseItem1smart')].value"
                             classNames={spellCastClassnames}
                           />
                         </div>
@@ -219,11 +218,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                           <Input
                             label="Item 2 (Primary)"
                             type={FieldType.KeybindingInput}
-                            name="files[1].sections[0].settings[192].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtUseItem2')].value"
                           />
                           <Input
                             type={FieldType.Boolean}
-                            name="files[1].sections[2].settings[7].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtUseItem2smart')].value"
                             classNames={spellCastClassnames}
                           />
                         </div>
@@ -231,11 +230,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                           <Input
                             label="Item 3 (Primary)"
                             type={FieldType.KeybindingInput}
-                            name="files[1].sections[0].settings[193].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtUseItem3')].value"
                           />
                           <Input
                             type={FieldType.Boolean}
-                            name="files[1].sections[2].settings[8].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtUseItem3smart')].value"
                             classNames={spellCastClassnames}
                           />
                         </div>
@@ -243,11 +242,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                           <Input
                             label="Item 4 (Primary)"
                             type={FieldType.KeybindingInput}
-                            name="files[1].sections[0].settings[194].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtUseItem4')].value"
                           />
                           <Input
                             type={FieldType.Boolean}
-                            name="files[1].sections[2].settings[9].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtUseItem4smart')].value"
                             classNames={spellCastClassnames}
                           />
                         </div>
@@ -255,11 +254,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                           <Input
                             label="Item 5 (Primary)"
                             type={FieldType.KeybindingInput}
-                            name="files[1].sections[0].settings[195].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtUseItem5')].value"
                           />
                           <Input
                             type={FieldType.Boolean}
-                            name="files[1].sections[2].settings[10].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtUseItem5smart')].value"
                             classNames={spellCastClassnames}
                           />
                         </div>
@@ -267,11 +266,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                           <Input
                             label="Item 6 (Primary)"
                             type={FieldType.KeybindingInput}
-                            name="files[1].sections[0].settings[196].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtUseItem6')].value"
                           />
                           <Input
                             type={FieldType.Boolean}
-                            name="files[1].sections[2].settings[11].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtUseItem6smart')].value"
                             classNames={spellCastClassnames}
                           />
                         </div>
@@ -284,11 +283,11 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                           <Input
                             label="Trinket (Primary)"
                             type={FieldType.KeybindingInput}
-                            name="files[1].sections[0].settings[198].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='GameEvents')].settings[?(@.name=='evtUseVisionItem')].value"
                           />
                           <Input
                             type={FieldType.Boolean}
-                            name="files[1].sections[2].settings[12].value"
+                            name="$.files[?(@.name=='Input.ini')].sections[?(@.name=='Quickbinds')].settings[?(@.name=='evtUseVisionItemsmart')].value"
                             classNames={spellCastClassnames}
                           />
                         </div>
@@ -303,12 +302,12 @@ export default function SettingsForm({ data }: { data: FormikValues }) {
                       <Input
                         label="Replace Quick Cast with Quick Cast With Indicator in the quickbind UI"
                         type={FieldType.Boolean}
-                        name="files[0].sections[5].settings[50].value"
+                        name="$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='SmartCastOnKeyRelease')].value"
                       />
                       <Input
                         label="Cast the pressed spell upon pressing another spell"
                         type={FieldType.Boolean}
-                        name="files[0].sections[5].settings[51].value"
+                        name="$.files[?(@.name=='Game.cfg')].sections[?(@.name=='HUD')].settings[?(@.name=='SmartCastWithIndicator_CastWhenNewSpellSelected')].value"
                       />
                     </div>
                   </div>
