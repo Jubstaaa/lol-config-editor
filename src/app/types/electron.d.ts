@@ -4,6 +4,8 @@ interface IElectronAPI {
   getSavedConfigs: () => Promise<{ name: string; path: string }[]>;
   readConfig: (path: string) => Promise<any>;
   deleteConfig: (path: string) => Promise<void>;
+  checkDefaultPath: () => Promise<object>;
+  selectFolder: () => Promise<object>;
 }
 
 declare global {

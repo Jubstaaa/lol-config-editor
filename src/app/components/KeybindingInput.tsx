@@ -113,7 +113,7 @@ const KeybindingInput = ({
                   .split(/\]\[/)
                   .map((item) =>
                     item
-                      .replace(/[\[\]]/g, "")
+                      .replace(/[[\]]/g, "") // Remove square brackets
                       .toLowerCase()
                       .replace(/^\w/, (char) => char.toUpperCase())
                   )

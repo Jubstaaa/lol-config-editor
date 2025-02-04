@@ -2,9 +2,9 @@ import { contextBridge, ipcRenderer } from "electron";
 import { FormikValues } from "formik/dist";
 
 contextBridge.exposeInMainWorld("electron", {
-  checkDefaultPath: (): Promise<any> =>
+  checkDefaultPath: (): Promise<object> =>
     ipcRenderer.invoke("check-default-path"),
-  selectFolder: (): Promise<any> => ipcRenderer.invoke("select-folder"),
+  selectFolder: (): Promise<object> => ipcRenderer.invoke("select-folder"),
   saveConfig: (values: FormikValues, name: string): Promise<string> =>
     ipcRenderer.invoke("save-config", values, name),
   getSavedConfigs: (): Promise<{ name: string; path: string }[]> =>

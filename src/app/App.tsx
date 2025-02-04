@@ -3,6 +3,7 @@ import { NextUIProvider, Button } from "@nextui-org/react";
 import SettingsForm from "./components/SettingsForm";
 import toast, { Toaster } from "react-hot-toast";
 import { FormikValues } from "formik/dist";
+const electron = window.electron;
 
 const App: FC = () => {
   const [persistedSettings, setPersistedSettings] = useState<any>(null);

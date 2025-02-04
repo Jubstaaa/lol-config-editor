@@ -109,3 +109,7 @@ Thumbs.db
 
 # Build directories
 dist/
+
+# certificates
+*.pfx
+*.pem
