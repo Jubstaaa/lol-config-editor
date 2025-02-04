@@ -69,7 +69,9 @@ function Input({
         name={name}
         label={placeholder || label}
         step={step}
-        onChange={(value: number) => setFieldValue(dotNotation, value / scale)}
+        onChange={(value: number) =>
+          setFieldValue(dotNotation, (value / scale).toString())
+        }
         className={className}
       />
     );

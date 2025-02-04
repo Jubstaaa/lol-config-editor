@@ -13,7 +13,14 @@ const config: ForgeConfig = {
     asar: true,
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel()],
+  makers: [
+    new MakerSquirrel({
+      name: "lol-config-editor",
+      exe: "lol-config-editor.exe",
+      setupExe: "lol-config-editor.exe",
+      noMsi: true,
+    }),
+  ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
@@ -50,7 +57,6 @@ const config: ForgeConfig = {
           owner: "Jubstaaa",
           name: "lol-config-editor",
         },
-        prerelease: true, // Yayını ön sürüm olarak işaretler (isteğe bağlı)
       },
     },
   ],
