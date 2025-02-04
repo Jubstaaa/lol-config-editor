@@ -3,6 +3,9 @@ import { NextUIProvider, Button } from "@nextui-org/react";
 import SettingsForm from "./components/SettingsForm";
 import toast, { Toaster } from "react-hot-toast";
 import { FormikValues } from "formik/dist";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { ThemeSwitcher } from "./components/ThemeSwitcher";
+
 const electron = window.electron;
 
 const App: FC = () => {
@@ -35,16 +38,19 @@ const App: FC = () => {
 
   return (
     <NextUIProvider>
-      <main className="p-5">
-        {!persistedSettings ? (
-          <Button radius="none" onPress={handleSelectFolder}>
-            Select League of Legends folder
-          </Button>
-        ) : (
-          <SettingsForm data={persistedSettings} />
-        )}
-        <Toaster />
-      </main>
+      <NextThemesProvider attribute="class" defaultTheme="dark">
+        <main className="p-5">
+          <ThemeSwitcher />
+          {!persistedSettings ? (
+            <Button radius="none" onPress={handleSelectFolder}>
+              Select League of Legends folder
+            </Button>
+          ) : (
+            <SettingsForm data={persistedSettings} />
+          )}
+          <Toaster />
+        </main>
+      </NextThemesProvider>
     </NextUIProvider>
   );
 };
