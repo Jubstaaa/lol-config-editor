@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Checkbox,
   cn,
@@ -40,19 +40,21 @@ function Input({
   reverse = false,
   ...props
 }: InputProps) {
-  const { values, setFieldValue } = useFormikContext<any>();
-  const [dotNotation] = useState<any>(
-    name
-      ? convertJSONPathToDotNotation(
-          JSONPath({
-            path: name,
-            json: values,
-            resultType: "path",
-          })[0] || ""
-        )
-      : ""
-  );
+  const { values, setFieldValue, setValues } = useFormikContext<any>();
+  const [dotNotation, setDotNotation] = useState<string>("");
 
+  useEffect(() => {
+    if (name) {
+      const newDotNotation = convertJSONPathToDotNotation(
+        JSONPath({
+          path: name,
+          json: values,
+          resultType: "path",
+        })[0] || ""
+      );
+      setDotNotation(newDotNotation);
+    }
+  }, [name, values]);
   if (type === FieldType.Slider) {
     return (
       <Slider
@@ -140,7 +142,13 @@ function Input({
     return (
       <KeybindingInput
         value={get(values, dotNotation) || ""}
-        onChange={(value: string) => setFieldValue(dotNotation, value)}
+        onChange={(value: string) => {
+          let jsonValues = JSON.stringify(values);
+          jsonValues = jsonValues.replace(value, "[<Unbound>]");
+          const newValues = JSON.parse(jsonValues);
+          setValues(newValues);
+          setFieldValue(dotNotation, value);
+        }}
         label={placeholder || label}
         className={className}
       />
