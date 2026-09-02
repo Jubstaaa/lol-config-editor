@@ -45,7 +45,8 @@ jobs:
           projectPath: app
           tagName: ${{ github.ref_name }}
           releaseName: LoL Config Editor ${{ github.ref_name }}
-          releaseDraft: true
+          # Published on the tag, not held as a draft: a tag is the decision.
+          releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
           args: ${{ matrix.args }}
