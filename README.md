@@ -66,15 +66,20 @@ Windows signing. Two repository secrets are needed once:
 - `TAURI_SIGNING_PRIVATE_KEY` — the contents of the private key
 - `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` — empty, unless the key was given one
 
-Then tagging is the whole release:
+Then tagging ships Windows:
 
 ```bash
 git tag v2.0.0 && git push origin v2.0.0
 ```
 
-`release.yml` builds macOS and Windows, stamps the version from the tag into
-`package.json`, `tauri.conf.json` and `Cargo.toml`, and opens a draft release
-with `latest.json` — which is what installed copies read to find the update.
+`release.yml` builds it, stamps the version from the tag into `package.json`,
+`tauri.conf.json` and `Cargo.toml`, and publishes the release with `latest.json`
+— which is what installed copies read to find the update.
+
+macOS ships by hand, because the build is not signed with an Apple certificate
+and every download needs its quarantine flag cleared. Run the `release` workflow
+from the Actions tab with the tag as its input; it adds the macOS assets to that
+release and merges the darwin entry into the manifest already there.
 
 The macOS build is not signed with an Apple developer certificate, so a
 downloaded `.dmg` needs its quarantine flag cleared:

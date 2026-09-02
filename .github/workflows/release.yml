@@ -3,61 +3,96 @@ name: release
 on:
   push:
     tags: ['v*']
+  # macOS ships by hand, so it needs a way to be asked for after the fact.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to build and publish the macOS build for (e.g. v2.0.0)
+        required: true
+        type: string
 
 jobs:
-  release:
-    name: draft release (${{ matrix.label }})
-    runs-on: ${{ matrix.os }}
+  windows:
+    name: Windows x64
+    # Every tag ships Windows: it is where nearly every League player is.
+    if: github.event_name == 'push'
+    runs-on: windows-latest
     permissions:
       contents: write
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: macos-15
-            label: macOS arm64
-            args: --target aarch64-apple-darwin --bundles app,dmg
-            target: aarch64-apple-darwin
-          - os: windows-latest
-            label: Windows x64
-            args: --bundles nsis
-            target: x86_64-pc-windows-msvc
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
       - uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: app/src-tauri
-          key: ${{ matrix.target }}
+          key: windows
       - run: bun install --frozen-lockfile
         working-directory: app
       - name: Stamp the version from the tag
         run: bun run scripts/set-version.ts "${{ github.ref_name }}"
-      # Both jobs write into one draft release, so the updater manifest ends up
-      # listing every platform rather than whichever job finished last.
       - uses: tauri-apps/tauri-action@v0
         with:
           projectPath: app
           tagName: ${{ github.ref_name }}
           releaseName: LoL Config Editor ${{ github.ref_name }}
-          # Published on the tag, not held as a draft: a tag is the decision.
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
-          args: ${{ matrix.args }}
-        # To sign and notarise the macOS build, add the Apple secrets here:
+          args: --bundles nsis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Signs the update package with the project's own key, which is what
+          # lets the app install an update in place. Nothing to do with Apple.
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+
+  macos:
+    name: macOS arm64
+    # Never on a tag. The build is not signed with an Apple certificate, so a
+    # download needs its quarantine flag cleared by hand — that is a decision to
+    # make per release, not something to publish automatically. Running this
+    # against an already released tag adds the macOS assets to it and merges the
+    # darwin entry into the updater manifest that is already there.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app/src-tauri
+          key: macos
+      - run: bun install --frozen-lockfile
+        working-directory: app
+      - name: Stamp the version from the tag
+        run: bun run scripts/set-version.ts "${{ inputs.tag }}"
+      - uses: tauri-apps/tauri-action@v0
+        with:
+          projectPath: app
+          tagName: ${{ inputs.tag }}
+          releaseName: LoL Config Editor ${{ inputs.tag }}
+          releaseDraft: false
+          prerelease: false
+          includeUpdaterJson: true
+          args: --target aarch64-apple-darwin --bundles app,dmg
+        # To sign and notarise, add the Apple secrets to this step's env:
         # APPLE_CERTIFICATE, APPLE_CERTIFICATE_PASSWORD, APPLE_SIGNING_IDENTITY,
         # APPLE_ID, APPLE_PASSWORD, APPLE_TEAM_ID. They cannot sit here empty
         # waiting for the day — Tauri reads an empty APPLE_CERTIFICATE as a real
         # one and fails the build trying to import it.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Signs the update package with the project's own key, which is what
-          # lets the app install an update in place. Nothing to do with Apple.
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
