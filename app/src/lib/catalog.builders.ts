@@ -16,7 +16,13 @@ interface Extras {
     wide?: boolean
 }
 
-const field = (ref: SettingRef, label: string, control: Control, fallback: string, extras: Extras = {}): FieldDef => ({
+const field = (
+    ref: SettingRef,
+    label: string,
+    control: Control,
+    fallback: string,
+    extras: Extras = {}
+): FieldDef => ({
     ref,
     label,
     control,
@@ -24,8 +30,12 @@ const field = (ref: SettingRef, label: string, control: Control, fallback: strin
     ...extras,
 })
 
-export const toggle = (ref: SettingRef, label: string, fallback = '1', extras: Extras & { invert?: boolean } = {}) =>
-    field(ref, label, { kind: 'toggle', invert: extras.invert }, fallback, extras)
+export const toggle = (
+    ref: SettingRef,
+    label: string,
+    fallback = '1',
+    extras: Extras & { invert?: boolean } = {}
+) => field(ref, label, { kind: 'toggle', invert: extras.invert }, fallback, extras)
 
 /** A 0–1 float League stores with four decimals, shown as a whole percentage. */
 export const percent = (ref: SettingRef, label: string, fallback = '0.5000', extras: Extras = {}) =>
@@ -56,8 +66,13 @@ export const slider = (
         { wide: true, ...extras }
     )
 
-export const choice = (ref: SettingRef, label: string, options: Choice[], fallback: string, extras: Extras = {}) =>
-    field(ref, label, { kind: 'choice', options }, fallback, extras)
+export const choice = (
+    ref: SettingRef,
+    label: string,
+    options: Choice[],
+    fallback: string,
+    extras: Extras = {}
+) => field(ref, label, { kind: 'choice', options }, fallback, extras)
 
 export const keybind = (ref: SettingRef, label: string, slot = 0, extras: Extras = {}) =>
     field(ref, label, { kind: 'keybind', slot }, '', extras)

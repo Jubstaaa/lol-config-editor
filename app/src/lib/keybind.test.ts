@@ -112,16 +112,18 @@ describe('findConflicts', () => {
 
     it('does not report a modified chord as a plain key', () => {
         // [Ctrl][q] is a different key from [q] and must survive untouched.
-        expect(findConflicts(crowded, ['q'], exclude).some(item => item.ref.key === 'evtChampMasteryDisplay')).toBe(
-            false
-        )
+        expect(
+            findConflicts(crowded, ['q'], exclude).some(item => item.ref.key === 'evtChampMasteryDisplay')
+        ).toBe(false)
         expect(findConflicts(crowded, ['Ctrl', 'q'], exclude).map(item => item.ref.key)).toEqual([
             'evtChampMasteryDisplay',
         ])
     })
 
     it('ignores settings that are not keybinds', () => {
-        expect(findConflicts(crowded, ['q'], exclude).some(item => item.ref.key === 'GlobalScale')).toBe(false)
+        expect(findConflicts(crowded, ['q'], exclude).some(item => item.ref.key === 'GlobalScale')).toBe(
+            false
+        )
     })
 
     it('reports nothing for an unbound chord', () => {
@@ -132,7 +134,9 @@ describe('findConflicts', () => {
     it('never reports the setting being edited', () => {
         const self = { file: 'Input.ini', section: 'GameEvents', key: 'evtCastSpell1' }
 
-        expect(findConflicts(crowded, ['q'], self).some(found => found.ref.key === 'evtCastSpell1')).toBe(false)
+        expect(findConflicts(crowded, ['q'], self).some(found => found.ref.key === 'evtCastSpell1')).toBe(
+            false
+        )
     })
 
     it('finds no conflict anywhere in a config League wrote itself', () => {

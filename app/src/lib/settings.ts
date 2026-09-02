@@ -33,7 +33,10 @@ const withSetting = (section: ConfigSection, key: string, value: string): Config
 const withSection = (file: ConfigFile, ref: SettingRef, value: string): ConfigFile => {
     const at = file.sections.findIndex(section => section.name === ref.section)
     if (at === -1) {
-        return { ...file, sections: [...file.sections, { name: ref.section, settings: [{ name: ref.key, value }] }] }
+        return {
+            ...file,
+            sections: [...file.sections, { name: ref.section, settings: [{ name: ref.key, value }] }],
+        }
     }
 
     const section = withSetting(file.sections[at], ref.key, value)
@@ -49,7 +52,11 @@ const withSection = (file: ConfigFile, ref: SettingRef, value: string): ConfigFi
  * League has not written it yet. Unchanged branches keep their identity, so React
  * can compare by reference.
  */
-export const writeSetting = (config: PersistedSettings, ref: SettingRef, value: string): PersistedSettings => {
+export const writeSetting = (
+    config: PersistedSettings,
+    ref: SettingRef,
+    value: string
+): PersistedSettings => {
     const at = config.files.findIndex(file => file.name === ref.file)
     if (at === -1) {
         const section: ConfigSection = { name: ref.section, settings: [{ name: ref.key, value }] }

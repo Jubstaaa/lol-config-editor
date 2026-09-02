@@ -302,6 +302,23 @@ export const TABS: TabDef[] = [
                 ],
             },
             {
+                label: 'Quick cast with indicator',
+                fields: [
+                    toggle(
+                        game('HUD', 'SmartCastOnKeyRelease'),
+                        'Replace quick cast with quick cast with indicator in the quickbind UI',
+                        '0',
+                        { wide: true }
+                    ),
+                    toggle(
+                        game('HUD', 'SmartCastWithIndicator_CastWhenNewSpellSelected'),
+                        'Cast the pressed spell when another spell is pressed',
+                        '0',
+                        { wide: true }
+                    ),
+                ],
+            },
+            {
                 label: 'Chat',
                 fields: [toggle(game('Chat', 'EnableChatFilter'), 'Enable language filter')],
             },

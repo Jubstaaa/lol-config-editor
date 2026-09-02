@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+@theme {
+    --color-ink-900: #070d18;
+    --color-ink-800: #0a1428;
+    --color-ink-700: #101d33;
+    --color-ink-600: #16263f;
+    --color-ink-500: #1e3252;
+    --color-gold-300: #f0e6d2;
+    --color-gold-400: #c8aa6e;
+    --color-gold-500: #a1854f;
+    --color-gold-600: #785a28;
+    --color-teal-400: #0ac8b9;
+    --color-danger-400: #e0534d;
+
+    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+    :root {
+        color-scheme: dark;
+    }
+
+    html,
+    body,
+    #root {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        background: var(--color-ink-900);
+        color: var(--color-gold-300);
+        font-family: var(--font-sans);
+        font-size: 13px;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* The window is the app; only panes scroll. */
+    body {
+        overflow: hidden;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--color-ink-500);
+        border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-gold-400);
+        outline-offset: 2px;
+    }
+}

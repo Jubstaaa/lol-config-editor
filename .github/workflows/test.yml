@@ -1,0 +1,36 @@
+name: test
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: app (rust + typescript)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app/src-tauri
+      - run: bun install --frozen-lockfile
+        working-directory: app
+      - run: bun run lint
+        working-directory: app
+      - run: bun run build
+        working-directory: app
+      - run: cargo fmt --check
+        working-directory: app/src-tauri
+      - run: cargo clippy --all-targets -- -D warnings
+        working-directory: app/src-tauri

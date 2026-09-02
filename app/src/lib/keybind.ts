@@ -52,9 +52,7 @@ const TITLE = /^\w/
 
 /** `['Ctrl', 'Button 1']` reads as `Ctrl + Button 1`; an empty chord reads as nothing. */
 export const labelOfChord = (chord: Chord): string =>
-    isUnbound(chord)
-        ? ''
-        : chord.map(token => token.replace(TITLE, first => first.toUpperCase())).join(' + ')
+    isUnbound(chord) ? '' : chord.map(token => token.replace(TITLE, first => first.toUpperCase())).join(' + ')
 
 /** Both slots for a setting, as `Q | Ctrl + Q`. */
 export const labelOfBinding = (value: string): string =>
