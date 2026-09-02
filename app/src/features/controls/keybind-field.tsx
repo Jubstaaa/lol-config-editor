@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 import KeybindCapture from './keybind-capture'
-import { UNBOUND, labelOfChord, slotOf } from '../../lib/keybind'
+import { UNBOUND, labelOfChord, slotOf } from '../../lib/keybind/keybind'
 
-import type { Chord } from '../../lib/keybind'
+import type { Chord } from '../../lib/keybind/keybind'
 import type { FieldProps } from './controls.types'
 
 interface KeybindFieldProps extends FieldProps {

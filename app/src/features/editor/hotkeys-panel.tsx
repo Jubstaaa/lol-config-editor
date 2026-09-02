@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
 import SettingField from '../controls/setting-field'
-import { CASTABLE, HOTKEY_GROUPS, quickbindFor } from '../../lib/hotkeys'
-import { quickbind } from '../../lib/catalog.builders'
+import { CASTABLE, HOTKEY_GROUPS, quickbindFor } from '../../lib/catalog/hotkeys'
+import { quickbind } from '../../lib/catalog/catalog.builders'
 import { useSettings } from './settings.context'
 
-import type { HotkeyGroup, HotkeyTable } from '../../lib/hotkeys'
+import type { HotkeyGroup, HotkeyTable } from '../../lib/catalog/hotkeys'
 
 const Table = ({ table }: { table: HotkeyTable }) => (
     <div className='min-w-0'>

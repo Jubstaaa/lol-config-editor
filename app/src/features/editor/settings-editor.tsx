@@ -1,6 +1,6 @@
 import SettingField from '../controls/setting-field'
 
-import type { GroupDef, TabDef } from '../../lib/catalog.types'
+import type { GroupDef, TabDef } from '../../lib/catalog/catalog.types'
 
 const Group = ({ group }: { group: GroupDef }) => (
     <section className='space-y-2'>

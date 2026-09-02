@@ -1,4 +1,4 @@
-import type { SettingRef } from './settings.types'
+import type { SettingRef } from '../settings/settings.types'
 
 export interface Choice {
     label: string

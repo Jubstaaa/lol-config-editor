@@ -23,6 +23,9 @@ const SUMMONERS: Target[] = [
     { key: 'AvatarSpell2', label: 'Summoner spell 2' },
 ]
 
+/** Riot's role-bound slot, added after this app's first version. */
+const ROLE_BOUND: Target[] = [{ key: 'RoleBound', label: 'Role-bound spell' }]
+
 const ITEMS: Target[] = [1, 2, 3, 4, 5, 6].map(slot => ({
     key: `Item${slot}`,
     label: `Item ${slot}`,
@@ -31,7 +34,7 @@ const ITEMS: Target[] = [1, 2, 3, 4, 5, 6].map(slot => ({
 
 const TRINKET: Target[] = [{ key: 'VisionItem', label: 'Trinket', used: true }]
 
-export const CASTABLE = [...SPELLS, ...SUMMONERS, ...ITEMS, ...TRINKET]
+export const CASTABLE = [...SPELLS, ...SUMMONERS, ...ROLE_BOUND, ...ITEMS, ...TRINKET]
 
 /** The cast modes League gives every ability and item, in its own order. */
 export const CAST_MODES = [
@@ -84,7 +87,7 @@ const plain = (label: string, entries: [string, string][]): HotkeyTable => ({
     rows: entries.map(([key, name]) => SLOTS.map(slot => keybind(event(key), name, slot))),
 })
 
-const abilities = [...SPELLS, ...SUMMONERS]
+const abilities = [...SPELLS, ...SUMMONERS, ...ROLE_BOUND]
 
 export const HOTKEY_GROUPS: HotkeyGroup[] = [
     {
@@ -94,6 +97,10 @@ export const HOTKEY_GROUPS: HotkeyGroup[] = [
     {
         label: 'Items and trinket',
         tables: CAST_MODES.map(mode => castTable(mode.label, [...ITEMS, ...TRINKET], mode.prefix)),
+    },
+    {
+        label: 'Extra item slot',
+        tables: [plain('Inventory', [['evtUseItem7', 'Item 7']])],
     },
     {
         label: 'Player movement',
@@ -186,6 +193,7 @@ export const HOTKEY_GROUPS: HotkeyGroup[] = [
             plain('Chat and voice', [
                 ['evtChatHistory', 'Chat history'],
                 ['evtPushToTalk', 'Push to talk'],
+                ['evtPushToTalkTeam', 'Push to talk (team)'],
                 ['evtShowVoicePanel', 'Show voice panel'],
             ]),
             plain('Emotes', [

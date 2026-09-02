@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
 import { TABS } from './catalog'
-import { readSetting, refKey } from './settings'
+import { readSetting, refKey } from '../settings/settings'
 
-import fixture from './persisted-settings.fixture.json'
+import fixture from '../settings/persisted-settings.fixture.json'
 
 import type { FieldDef } from './catalog.types'
-import type { PersistedSettings } from './settings.types'
+import type { PersistedSettings } from '../settings/settings.types'
 
 const fields: FieldDef[] = TABS.flatMap(tab => tab.groups.flatMap(group => group.fields))
 

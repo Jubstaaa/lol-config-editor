@@ -4,7 +4,7 @@ import SliderField from './slider-field'
 import ToggleField from './toggle-field'
 import { useSettings } from '../editor/settings.context'
 
-import type { FieldDef } from '../../lib/catalog.types'
+import type { FieldDef } from '../../lib/catalog/catalog.types'
 
 interface SettingFieldProps {
     field: FieldDef

@@ -1,5 +1,5 @@
 import type { Choice, Control, FieldDef } from './catalog.types'
-import type { SettingRef } from './settings.types'
+import type { SettingRef } from '../settings/settings.types'
 
 export const game = (section: string, key: string): SettingRef => ({ file: 'Game.cfg', section, key })
 

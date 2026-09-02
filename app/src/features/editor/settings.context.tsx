@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react'
 
-import type { Chord } from '../../lib/keybind'
-import type { FieldDef } from '../../lib/catalog.types'
-import type { SettingRef } from '../../lib/settings.types'
+import type { Chord } from '../../lib/keybind/keybind'
+import type { FieldDef } from '../../lib/catalog/catalog.types'
+import type { SettingRef } from '../../lib/settings/settings.types'
 
 export interface SettingsCommands {
     /** What League has, or what League would use when it has never written the key. */

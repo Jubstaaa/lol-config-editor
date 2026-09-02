@@ -117,11 +117,11 @@
                     "settings": [
                         {
                             "name": "AutoAcquireTarget",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "CfgVersion",
-                            "value": "14.24.644.2327"
+                            "value": "13.23.544.5515"
                         },
                         {
                             "name": "CursorOverride",
@@ -133,7 +133,7 @@
                         },
                         {
                             "name": "EnableAudio",
-                            "value": "0"
+                            "value": "1"
                         },
                         {
                             "name": "EnableLeftMouseButtonAttackMove",
@@ -169,11 +169,11 @@
                         },
                         {
                             "name": "ShowTurretRangeIndicators",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "SnapCameraOnRespawn",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "TargetChampionsOnlyAsToggle",
@@ -194,11 +194,11 @@
                         },
                         {
                             "name": "CameraLockMode",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "ChatChannelVisibility",
-                            "value": "2"
+                            "value": "0"
                         },
                         {
                             "name": "ChatScale",
@@ -222,10 +222,6 @@
                         },
                         {
                             "name": "EmoteSize",
-                            "value": "0"
-                        },
-                        {
-                            "name": "EnableItemComponentPurchasing",
                             "value": "0"
                         },
                         {
@@ -281,6 +277,10 @@
                             "value": "0.5000"
                         },
                         {
+                            "name": "MinimapEnableAllTimers",
+                            "value": "0"
+                        },
+                        {
                             "name": "MinimapMoveSelf",
                             "value": "1"
                         },
@@ -314,7 +314,7 @@
                         },
                         {
                             "name": "ShopScale",
-                            "value": "0.4300"
+                            "value": "0.4444"
                         },
                         {
                             "name": "ShowAllChannelChat",
@@ -423,11 +423,11 @@
                         },
                         {
                             "name": "NativeOffsetX",
-                            "value": "0.1479"
+                            "value": "0.0000"
                         },
                         {
                             "name": "NativeOffsetY",
-                            "value": "-0.0759"
+                            "value": "0.0000"
                         }
                     ]
                 },
@@ -493,7 +493,7 @@
                     "settings": [
                         {
                             "name": "AmbienceMute",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "AmbienceVolume",
@@ -501,7 +501,7 @@
                         },
                         {
                             "name": "AnnouncerMute",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "AnnouncerVolume",
@@ -509,11 +509,11 @@
                         },
                         {
                             "name": "MasterMute",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "MasterVolume",
-                            "value": "0"
+                            "value": "0.1500"
                         },
                         {
                             "name": "MusicMute",
@@ -524,8 +524,16 @@
                             "value": "0.7500"
                         },
                         {
+                            "name": "NotificationsMute",
+                            "value": "0"
+                        },
+                        {
+                            "name": "NotificationsVolume",
+                            "value": "0.7500"
+                        },
+                        {
                             "name": "PingsMute",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "PingsVolume",
@@ -533,7 +541,7 @@
                         },
                         {
                             "name": "SfxMute",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "SfxVolume",
@@ -541,7 +549,7 @@
                         },
                         {
                             "name": "VoiceMute",
-                            "value": "1"
+                            "value": "0"
                         },
                         {
                             "name": "VoiceVolume",
@@ -588,6 +596,10 @@
                         {
                             "name": "evtCastAvatarSpell2",
                             "value": "[f]"
+                        },
+                        {
+                            "name": "evtCastRoleBound",
+                            "value": "[v]"
                         },
                         {
                             "name": "evtCastSpell1",
@@ -698,6 +710,10 @@
                             "value": ""
                         },
                         {
+                            "name": "evtNormalCastRoleBound",
+                            "value": ""
+                        },
+                        {
                             "name": "evtNormalCastSpell1",
                             "value": ""
                         },
@@ -804,6 +820,10 @@
                         {
                             "name": "evtPushToTalk",
                             "value": "[<Unbound>]"
+                        },
+                        {
+                            "name": "evtPushToTalkTeam",
+                            "value": "[0]"
                         },
                         {
                             "name": "evtRadialEmoteInstantOpen",
@@ -926,6 +946,10 @@
                             "value": "[Alt][7]"
                         },
                         {
+                            "name": "evtSelfCastRoleBound",
+                            "value": "[Alt][v],"
+                        },
+                        {
                             "name": "evtSelfCastSpell1",
                             "value": "[Alt][q],"
                         },
@@ -998,6 +1022,10 @@
                             "value": "[Shift][7]"
                         },
                         {
+                            "name": "evtSmartCastRoleBound",
+                            "value": "[Shift][v]"
+                        },
+                        {
                             "name": "evtSmartCastSpell1",
                             "value": "[Shift][q]"
                         },
@@ -1047,6 +1075,10 @@
                         },
                         {
                             "name": "evtSmartCastWithIndicatorItem6",
+                            "value": ""
+                        },
+                        {
+                            "name": "evtSmartCastWithIndicatorRoleBound",
                             "value": ""
                         },
                         {
@@ -1102,6 +1134,10 @@
                             "value": ""
                         },
                         {
+                            "name": "evtSmartPlusSelfCastRoleBound",
+                            "value": ""
+                        },
+                        {
                             "name": "evtSmartPlusSelfCastSpell1",
                             "value": ""
                         },
@@ -1151,6 +1187,10 @@
                         },
                         {
                             "name": "evtSmartPlusSelfCastWithIndicatorItem6",
+                            "value": ""
+                        },
+                        {
+                            "name": "evtSmartPlusSelfCastWithIndicatorRoleBound",
                             "value": ""
                         },
                         {
@@ -1269,6 +1309,10 @@
                         },
                         {
                             "name": "evtCastAvatarSpell2smart",
+                            "value": "1"
+                        },
+                        {
+                            "name": "evtCastRoleBoundsmart",
                             "value": "1"
                         },
                         {

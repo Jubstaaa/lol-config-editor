@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import type { Profile } from '../../lib/core.types'
+import type { Profile } from '../../lib/runtime/core.types'
 
 interface ProfileListProps {
     busy: boolean

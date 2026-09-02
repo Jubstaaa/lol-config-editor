@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest'
 
 import { TABS } from './catalog'
 import { HOTKEY_GROUPS, QUICKBIND_REFS } from './hotkeys'
-import { allSettings, refKey } from './settings'
+import { allSettings, refKey } from '../settings/settings'
 
-import fixture from './persisted-settings.fixture.json'
+import fixture from '../settings/persisted-settings.fixture.json'
 
-import type { PersistedSettings } from './settings.types'
+import type { PersistedSettings } from '../settings/settings.types'
 
 /** Settings deliberately left out of the UI, and why. */
 const DELIBERATE: Record<string, string> = {
@@ -23,17 +23,9 @@ const DELIBERATE: Record<string, string> = {
 
     // Held back on purpose: shipping a control whose meaning is a guess is the
     // bug this rewrite exists to stop. These need checking against the game.
-    'Game.cfg/Volume/MasterMute': 'polarity unverified',
-    'Game.cfg/Volume/MusicMute': 'polarity unverified',
-    'Game.cfg/Volume/SfxMute': 'polarity unverified',
-    'Game.cfg/Volume/VoiceMute': 'polarity unverified',
-    'Game.cfg/Volume/AnnouncerMute': 'polarity unverified',
-    'Game.cfg/Volume/AmbienceMute': 'polarity unverified',
-    'Game.cfg/Volume/PingsMute': 'polarity unverified',
     'Game.cfg/ColorPalette/ColorPalette': 'option values unverified',
     'Game.cfg/HUD/EternalsMilestoneDisplayMode': 'option values unverified',
     'Game.cfg/TFTHUD/EnableChat': 'unverified against a TFT config',
-    'Input.ini/GameEvents/evtUseItem7': 'no seventh item slot in the client',
 }
 
 describe('coverage of a config League wrote itself', () => {

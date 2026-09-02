@@ -6,11 +6,11 @@ import HotkeysPanel from './features/editor/hotkeys-panel'
 import ProfileList from './features/profiles/profile-list'
 import SettingsEditor from './features/editor/settings-editor'
 import { SettingsProvider } from './features/editor/settings.context'
-import { TABS } from './lib/catalog'
-import { UNBOUND, findConflicts, withSlot } from './lib/keybind'
-import { notifyDone, notifyFailed, notifyIdle, notifyProgress } from './lib/notify'
-import { checkForUpdate } from './lib/update'
-import { readSettingOr, writeSetting } from './lib/settings'
+import { TABS } from './lib/catalog/catalog'
+import { UNBOUND, findConflicts, withSlot } from './lib/keybind/keybind'
+import { notifyDone, notifyFailed, notifyIdle, notifyProgress } from './lib/runtime/notify'
+import { checkForUpdate } from './lib/runtime/update'
+import { readSettingOr, writeSetting } from './lib/settings/settings'
 import {
     applyConfig,
     deleteProfile,
@@ -22,12 +22,12 @@ import {
     saveProfile,
     setLock,
     useFolder,
-} from './lib/core'
+} from './lib/runtime/core'
 
-import type { Chord } from './lib/keybind'
-import type { FieldDef } from './lib/catalog.types'
-import type { Located, Profile } from './lib/core.types'
-import type { PersistedSettings, SettingRef } from './lib/settings.types'
+import type { Chord } from './lib/keybind/keybind'
+import type { FieldDef } from './lib/catalog/catalog.types'
+import type { Located, Profile } from './lib/runtime/core.types'
+import type { PersistedSettings, SettingRef } from './lib/settings/settings.types'
 
 const HOTKEYS_TAB = 'hotkeys'
 

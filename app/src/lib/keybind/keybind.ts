@@ -1,6 +1,6 @@
-import { allSettings, refsEqual } from './settings'
+import { allSettings, refsEqual } from '../settings/settings'
 
-import type { PersistedSettings, SettingRef } from './settings.types'
+import type { PersistedSettings, SettingRef } from '../settings/settings.types'
 
 /** League's own word for "nothing is bound here". */
 export const UNBOUND = '<Unbound>'

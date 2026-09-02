@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
 import { CASTABLE, CAST_MODES, HOTKEY_GROUPS, QUICKBIND_REFS, eventNameFor, quickbindFor } from './hotkeys'
-import { allSettings, readSetting, refKey } from './settings'
+import { allSettings, readSetting, refKey } from '../settings/settings'
 
-import fixture from './persisted-settings.fixture.json'
+import fixture from '../settings/persisted-settings.fixture.json'
 
 import type { FieldDef } from './catalog.types'
-import type { PersistedSettings } from './settings.types'
+import type { PersistedSettings } from '../settings/settings.types'
 
 const config = fixture as PersistedSettings
 

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { orderTokens, tokenForButton, tokenForKey } from '../../lib/keys'
-import { labelOfChord } from '../../lib/keybind'
+import { orderTokens, tokenForButton, tokenForKey } from '../../lib/keybind/keys'
+import { labelOfChord } from '../../lib/keybind/keybind'
 
-import type { Chord } from '../../lib/keybind'
+import type { Chord } from '../../lib/keybind/keybind'
 
 interface KeybindCaptureProps {
     label: string

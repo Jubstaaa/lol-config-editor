@@ -72,6 +72,21 @@ export const TABS: TabDef[] = [
                     percent(game('Volume', 'SfxVolume'), 'Sound FX volume', '0.7500'),
                     percent(game('Volume', 'AmbienceVolume'), 'Ambience volume', '0.7500'),
                     percent(game('Volume', 'PingsVolume'), 'Pings volume', '0.7500'),
+                    percent(game('Volume', 'NotificationsVolume'), 'Notifications volume', '0.7500'),
+                ],
+            },
+            {
+                label: 'Mute channels',
+                hint: 'League stores these the plain way round: 1 means muted.',
+                fields: [
+                    toggle(game('Volume', 'MasterMute'), 'Mute master', '0'),
+                    toggle(game('Volume', 'MusicMute'), 'Mute music', '0'),
+                    toggle(game('Volume', 'SfxMute'), 'Mute sound FX', '0'),
+                    toggle(game('Volume', 'VoiceMute'), 'Mute voice', '0'),
+                    toggle(game('Volume', 'AnnouncerMute'), 'Mute announcer', '0'),
+                    toggle(game('Volume', 'AmbienceMute'), 'Mute ambience', '0'),
+                    toggle(game('Volume', 'PingsMute'), 'Mute pings', '0'),
+                    toggle(game('Volume', 'NotificationsMute'), 'Mute notifications', '0'),
                 ],
             },
             {
@@ -168,6 +183,7 @@ export const TABS: TabDef[] = [
                     toggle(game('HUD', 'ShowNeutralCamps'), 'Show neutral camps'),
                     toggle(game('HUD', 'FlipMiniMap'), 'Show minimap on left', '0'),
                     toggle(game('HUD', 'MinimapMoveSelf'), 'Allow minimap movement'),
+                    toggle(game('HUD', 'MinimapEnableAllTimers'), 'Show all minimap timers', '0'),
                 ],
             },
             {
@@ -292,13 +308,6 @@ export const TABS: TabDef[] = [
                         'Treat "target champions only" as a toggle'
                     ),
                     toggle(game('General', 'RecommendJunglePaths'), 'Display recommended jungle path', '0'),
-                    // The first version pointed this at HUD.RecommendJunglePaths,
-                    // a key that exists in neither section.
-                    toggle(
-                        game('HUD', 'EnableItemComponentPurchasing'),
-                        'Enable item component purchasing',
-                        '0'
-                    ),
                 ],
             },
             {

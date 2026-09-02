@@ -10,11 +10,11 @@ import {
     slotOf,
     withSlot,
 } from './keybind'
-import { allSettings } from './settings'
+import { allSettings } from '../settings/settings'
 
-import fixture from './persisted-settings.fixture.json'
+import fixture from '../settings/persisted-settings.fixture.json'
 
-import type { PersistedSettings } from './settings.types'
+import type { PersistedSettings } from '../settings/settings.types'
 
 const config = fixture as PersistedSettings
 

@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core'
 
 import type { Located, Profile } from './core.types'
-import type { PersistedSettings } from './settings.types'
+import type { PersistedSettings } from '../settings/settings.types'
 
 /** Rust hands failures back as plain strings; anything else is a real throw. */
 export const getErrorMessage = (error: unknown): string => {

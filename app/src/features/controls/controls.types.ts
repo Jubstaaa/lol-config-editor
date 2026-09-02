@@ -1,4 +1,4 @@
-import type { FieldDef } from '../../lib/catalog.types'
+import type { FieldDef } from '../../lib/catalog/catalog.types'
 
 export interface FieldProps {
     field: FieldDef

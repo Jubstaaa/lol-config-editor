@@ -37,15 +37,15 @@ locked — the app unlocks, writes, and locks it again.
 
 | Path | What it is |
 |---|---|
-| `app/src/lib/` | the settings model: read, upsert, keybind parsing, the catalogue. Pure, and fully tested |
+|  `app/src/lib/` | the settings model: read, upsert, keybind parsing, the catalogue. Pure, and fully tested |
 | `app/src/features/` | the editor — controls, hotkey tables, profiles |
 | `app/src-tauri/src/discovery.rs` | finding League's folder from Riot's own install record |
 | `app/src-tauri/src/config.rs` | reading, writing and locking the settings file |
 | `app/src-tauri/src/profiles.rs` | named copies, kept in the app's own folder |
 
 The split is deliberate: CI has no League install, so everything that can be
-tested without one lives in `app/src/lib/` and never imports a Tauri command.
-`app/src/lib/persisted-settings.fixture.json` is a real config the game wrote,
+tested without one lives in  `app/src/lib/` and never imports a Tauri command.
+`app/src/lib/settings/persisted-settings.fixture.json` is a real config the game wrote,
 and the tests check the catalogue against it — a control pointed at a key League
 does not have fails the build rather than silently doing nothing.
 

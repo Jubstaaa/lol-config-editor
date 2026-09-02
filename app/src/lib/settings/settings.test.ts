@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { allSettings, readSetting, writeSetting, writeSettings } from './settings'
 
-import fixture from './persisted-settings.fixture.json'
+import fixture from '../settings/persisted-settings.fixture.json'
 
 import type { PersistedSettings, SettingRef } from './settings.types'
 
@@ -23,12 +23,13 @@ describe('readSetting', () => {
         expect(readSetting(config, ref('NotAFile.cfg', 'HUD', 'GlobalScale'))).toBeUndefined()
     })
 
-    it('puts item component purchasing in HUD and jungle paths in General', () => {
+    it('keeps jungle paths in General and nowhere else', () => {
         // The first version bound the item-component checkbox to
-        // HUD.RecommendJunglePaths, which does not exist in either place.
-        expect(readSetting(config, ref('Game.cfg', 'HUD', 'EnableItemComponentPurchasing'))).toBeDefined()
+        // HUD.RecommendJunglePaths, a key that exists in neither section.
+        // Riot has since dropped EnableItemComponentPurchasing entirely.
         expect(readSetting(config, ref('Game.cfg', 'General', 'RecommendJunglePaths'))).toBeDefined()
         expect(readSetting(config, ref('Game.cfg', 'HUD', 'RecommendJunglePaths'))).toBeUndefined()
+        expect(readSetting(config, ref('Game.cfg', 'HUD', 'EnableItemComponentPurchasing'))).toBeUndefined()
     })
 })
 

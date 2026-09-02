@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
 import { orderTokens, tokenForButton, tokenForKey } from './keys'
-import { allSettings } from './settings'
+import { allSettings } from '../settings/settings'
 
-import fixture from './persisted-settings.fixture.json'
+import fixture from '../settings/persisted-settings.fixture.json'
 
-import type { PersistedSettings } from './settings.types'
+import type { PersistedSettings } from '../settings/settings.types'
 
 describe('tokenForKey', () => {
     it('lowercases letters the way League stores them', () => {
