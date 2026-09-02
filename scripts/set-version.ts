@@ -25,13 +25,14 @@ const edits: [string, RegExp, string][] = [
 for (const [path, pattern, replacement] of edits) {
     const file = Bun.file(path)
     const before = await file.text()
-    const after = before.replace(pattern, replacement)
 
-    if (after === before) {
-        console.error(`${path}: nothing to stamp — the version line did not match`)
+    // Test the pattern rather than comparing before and after: re-tagging the
+    // version the files already carry is a no-op, not a failure.
+    if (!pattern.test(before)) {
+        console.error(`${path}: no version line to stamp`)
         process.exit(1)
     }
 
-    await Bun.write(path, after)
+    await Bun.write(path, before.replace(pattern, replacement))
     console.log(`${path} -> ${version}`)
 }
