@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schema.tauri.app/config/2",
+    "productName": "LoL Config Editor",
+    "version": "2.0.0",
+    "identifier": "com.ilkerbalcilar.lolconfigeditor",
+    "build": {
+        "beforeDevCommand": "bun run dev",
+        "devUrl": "http://localhost:1420",
+        "beforeBuildCommand": "bun run build",
+        "frontendDist": "../dist"
+    },
+    "app": {
+        "windows": [
+            {
+                "title": "LoL Config Editor",
+                "width": 1280,
+                "height": 860,
+                "minWidth": 940,
+                "minHeight": 640,
+                "resizable": true,
+                "theme": "Dark"
+            }
+        ],
+        "security": {
+            "csp": null
+        }
+    },
+    "bundle": {
+        "active": true,
+        "targets": ["app", "dmg", "nsis"],
+        "category": "Utility",
+        "shortDescription": "League of Legends settings editor",
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
+        ],
+        "macOS": {
+            "minimumSystemVersion": "12.0"
+        },
+        "createUpdaterArtifacts": true
+    },
+    "plugins": {
+        "updater": {
+            "endpoints": [
+                "https://github.com/Jubstaaa/lol-config-editor/releases/latest/download/latest.json"
+            ],
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVBNTkyREIyMUE1OTkwNjcKUldSbmtGa2FzaTFaV3FyeGpoU3FDU3ZNK3RhVVFUZGtKSHAzY0pIOS9VZDNqZmlTNjByMm5hRE8K"
+        }
+    }
+}
