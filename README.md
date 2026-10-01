@@ -9,6 +9,10 @@ the PC picks them up.
 
 > Windows and macOS. Updates install themselves — the app checks on startup and
 > offers the new version.
+>
+> Windows releases also carry a portable `.exe` that runs without installing.
+> It cannot update itself, and it still keeps settings in AppData rather than
+> beside the binary.
 
 ## What it edits
 
@@ -75,6 +79,10 @@ git tag v2.0.0 && git push origin v2.0.0
 `release.yml` builds it, stamps the version from the tag into `package.json`,
 `tauri.conf.json` and `Cargo.toml`, and publishes the release with `latest.json`
 — which is what installed copies read to find the update.
+
+The Windows job also uploads the standalone binary NSIS would otherwise wrap, as
+`LoL-Config-Editor-<tag>-portable-x64.exe`. Nothing extra is built for it; the
+installer and the portable download are the same compilation.
 
 macOS ships by hand, because the build is not signed with an Apple certificate
 and every download needs its quarantine flag cleared. Run the `release` workflow
