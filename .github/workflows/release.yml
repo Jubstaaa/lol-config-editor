@@ -49,6 +49,22 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
 
+      # Tauri compiles a standalone exe and NSIS only wraps it, so the portable
+      # build is that exe published under its own name. It cannot self-update —
+      # the updater applies a release through the installer — and settings still
+      # live in AppData, so it is "no install needed", not "self-contained".
+      - name: Publish the portable exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $found = @(Get-ChildItem app/src-tauri/target/release -Filter *.exe -File)
+          if ($found.Count -ne 1) {
+            throw "expected exactly one exe in target/release, found $($found.Count): $($found.Name -join ', ')"
+          }
+          $portable = "LoL-Config-Editor-${{ github.ref_name }}-portable-x64.exe"
+          Copy-Item $found[0].FullName $portable
+          gh release upload "${{ github.ref_name }}" $portable --clobber
+
   macos:
     name: macOS arm64
     # Never on a tag. The build is not signed with an Apple certificate, so a
