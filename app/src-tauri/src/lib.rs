@@ -1,6 +1,9 @@
+mod accounts;
 mod config;
 mod discovery;
 mod profiles;
+mod riot;
+mod switcher;
 
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
@@ -144,6 +147,109 @@ fn delete_profile(app: AppHandle, name: String) -> Answer<()> {
     profiles::delete(&profiles_folder(&app)?, &name)
 }
 
+fn accounts_folder(app: &AppHandle) -> Answer<PathBuf> {
+    app.path()
+        .app_data_dir()
+        .map(|folder| folder.join("accounts"))
+        .map_err(|error| format!("this machine has no data folder: {error}"))
+}
+
+#[tauri::command]
+fn list_accounts(app: AppHandle) -> Answer<accounts::Store> {
+    accounts::load(&accounts_folder(&app)?)
+}
+
+/// Saves whoever is signed in to the Riot Client right now.
+#[tauri::command]
+async fn capture_account(
+    app: AppHandle,
+    label: String,
+    username: Option<String>,
+    password: Option<String>,
+) -> Answer<accounts::Account> {
+    let details = switcher::Capture {
+        label,
+        username,
+        password,
+    };
+    switcher::capture(&accounts_folder(&app)?, None, details).await
+}
+
+#[tauri::command]
+async fn recapture_account(app: AppHandle, id: String) -> Answer<accounts::Account> {
+    let details = switcher::Capture {
+        label: String::new(),
+        username: None,
+        password: None,
+    };
+    switcher::capture(&accounts_folder(&app)?, Some(&id), details).await
+}
+
+/// An empty password leaves the saved one alone; `forget_password` removes it.
+#[tauri::command]
+fn update_account(
+    app: AppHandle,
+    id: String,
+    label: String,
+    region: Option<String>,
+    username: Option<String>,
+    password: Option<String>,
+    forget_password: bool,
+) -> Answer<accounts::Account> {
+    let folder = accounts_folder(&app)?;
+    let mut store = accounts::load(&folder)?;
+    let account = store.find_mut(&id)?;
+
+    account.label = label.trim().to_string();
+    account.region = region
+        .map(|region| region.trim().to_uppercase())
+        .filter(|region| !region.is_empty());
+    account.username = username
+        .map(|name| name.trim().to_string())
+        .filter(|name| !name.is_empty());
+
+    if forget_password {
+        accounts::clear_password(&id)?;
+        account.has_password = false;
+    } else if let Some(password) = password.filter(|password| !password.is_empty()) {
+        accounts::set_password(&id, &password)?;
+        account.has_password = true;
+    }
+
+    let account = account.clone();
+    accounts::save(&folder, &store)?;
+    Ok(account)
+}
+
+#[tauri::command]
+fn delete_account(app: AppHandle, id: String) -> Answer<()> {
+    let folder = accounts_folder(&app)?;
+    let mut store = accounts::load(&folder)?;
+    store.find(&id)?;
+
+    accounts::clear_password(&id)?;
+    accounts::remove_snapshot(&folder, &id)?;
+    store.accounts.retain(|account| account.id != id);
+    if store.active_id.as_deref() == Some(id.as_str()) {
+        store.active_id = None;
+    }
+    accounts::save(&folder, &store)
+}
+
+#[tauri::command]
+fn set_launch_league(app: AppHandle, launch: bool) -> Answer<()> {
+    let folder = accounts_folder(&app)?;
+    let mut store = accounts::load(&folder)?;
+    store.launch_league = launch;
+    accounts::save(&folder, &store)
+}
+
+#[tauri::command]
+async fn switch_account(app: AppHandle, id: String) -> Answer<switcher::Switched> {
+    let folder = accounts_folder(&app)?;
+    switcher::switch(&app, &folder, &id).await
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -161,6 +267,13 @@ pub fn run() {
             save_profile,
             read_profile,
             delete_profile,
+            list_accounts,
+            capture_account,
+            recapture_account,
+            update_account,
+            delete_account,
+            set_launch_league,
+            switch_account,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -33,11 +33,25 @@ fn game_root_of(client: &str) -> Option<PathBuf> {
     Path::new(client).parent().map(Path::to_path_buf)
 }
 
-fn roots_from_record() -> Vec<PathBuf> {
-    let Ok(body) = std::fs::read_to_string(installs_record()) else {
+fn read_record() -> Option<serde_json::Value> {
+    let body = std::fs::read_to_string(installs_record()).ok()?;
+    serde_json::from_str(&body).ok()
+}
+
+/// Every `RiotClientServices` the install record knows about, live first.
+pub fn riot_clients_from_record() -> Vec<PathBuf> {
+    let Some(record) = read_record() else {
         return Vec::new();
     };
-    let Ok(record) = serde_json::from_str::<serde_json::Value>(&body) else {
+
+    ["rc_default", "rc_live", "rc_beta"]
+        .iter()
+        .filter_map(|key| record.get(key)?.as_str().map(PathBuf::from))
+        .collect()
+}
+
+fn roots_from_record() -> Vec<PathBuf> {
+    let Some(record) = read_record() else {
         return Vec::new();
     };
 

@@ -37,6 +37,16 @@ hand-edited settings get lost. The **Locked / Unlocked** button marks the file
 read-only so the game cannot overwrite it. Applying settings still works while
 locked — the app unlocks, writes, and locks it again.
 
+### Switching accounts
+
+Sign in to the Riot Client with **Stay signed in** checked, then use
+**Accounts → Add signed-in account** in the header. The app keeps a copy of that
+session; picking the account later closes Riot and League, restores the session
+and restarts the client (and League, if you tick the option). If a session has
+expired and you saved a password, the app types it into the Riot sign-in form —
+the password lives only in the system keychain. On macOS this needs
+**System Settings → Privacy & Security → Accessibility** for the app.
+
 ## Where things live
 
 | Path | What it is |
@@ -46,6 +56,8 @@ locked — the app unlocks, writes, and locks it again.
 | `app/src-tauri/src/discovery.rs` | finding League's folder from Riot's own install record |
 | `app/src-tauri/src/config.rs` | reading, writing and locking the settings file |
 | `app/src-tauri/src/profiles.rs` | named copies, kept in the app's own folder |
+| `app/src-tauri/src/riot.rs` | the Riot Client: session file, closing/launching, local API, typing |
+| `app/src-tauri/src/accounts.rs` / `switcher.rs` | saved accounts, keychain passwords, capture and switch |
 
 The split is deliberate: CI has no League install, so everything that can be
 tested without one lives in  `app/src/lib/` and never imports a Tauri command.

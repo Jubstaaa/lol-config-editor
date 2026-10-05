@@ -8,6 +8,7 @@
         "build": "tsc && vite build",
         "preview": "vite preview",
         "tauri": "tauri",
+        "build:exe": "tauri build --no-bundle",
         "lint": "tsc --noEmit && prettier --check . && vitest run",
         "format": "prettier --write .",
         "test": "vitest run"
