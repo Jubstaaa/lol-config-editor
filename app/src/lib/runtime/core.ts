@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/core'
 
-import type { Located, Profile } from './core.types'
+import type { Account, AccountEdit, AccountStore, Located, Profile, Switched } from './core.types'
 import type { PersistedSettings } from '../settings/settings.types'
 
 /** Rust hands failures back as plain strings; anything else is a real throw. */
@@ -29,3 +29,18 @@ export const saveProfile = (name: string, settings: PersistedSettings) =>
 export const readProfile = (name: string) => invoke<PersistedSettings>('read_profile', { name })
 
 export const deleteProfile = (name: string) => invoke<void>('delete_profile', { name })
+
+export const listAccounts = () => invoke<AccountStore>('list_accounts')
+
+/** Saves whoever is signed in to the Riot Client right now. */
+export const captureAccount = (label: string) => invoke<Account>('capture_account', { label })
+
+export const recaptureAccount = (id: string) => invoke<Account>('recapture_account', { id })
+
+export const updateAccount = (edit: AccountEdit) => invoke<Account>('update_account', { ...edit })
+
+export const deleteAccount = (id: string) => invoke<void>('delete_account', { id })
+
+export const setLaunchLeague = (launch: boolean) => invoke<void>('set_launch_league', { launch })
+
+export const switchAccount = (id: string) => invoke<Switched>('switch_account', { id })

@@ -2,6 +2,7 @@ import { open } from '@tauri-apps/plugin-dialog'
 import { Toaster, toast } from 'sonner'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+import AccountSwitcher from './features/accounts/account-switcher'
 import HotkeysPanel from './features/editor/hotkeys-panel'
 import ProfileList from './features/profiles/profile-list'
 import SettingsEditor from './features/editor/settings-editor'
@@ -194,8 +195,11 @@ export default function App() {
             .then(found => {
                 if (!found) return
 
+                // A fixed id keeps StrictMode's second effect run from stacking a duplicate.
                 toast(`Version ${found.version} is out`, {
+                    id: 'update-available',
                     duration: Infinity,
+                    closeButton: true,
                     action: {
                         label: 'Install',
                         onClick: () => {
@@ -260,6 +264,7 @@ export default function App() {
                     </div>
 
                     <div className='flex shrink-0 items-center gap-2'>
+                        <AccountSwitcher busy={busy} guard={guard} />
                         <button
                             type='button'
                             disabled={busy}

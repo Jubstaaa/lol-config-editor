@@ -1,6 +1,9 @@
+mod accounts;
 mod config;
 mod discovery;
 mod profiles;
+mod riot;
+mod switcher;
 
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
@@ -53,10 +56,11 @@ fn recall(app: &AppHandle) -> Option<PathBuf> {
     path.is_file().then_some(path)
 }
 
-fn profiles_folder(app: &AppHandle) -> Answer<PathBuf> {
+/// A folder of the app's own, `profiles` or `accounts`, inside its data folder.
+fn data_folder(app: &AppHandle, name: &str) -> Answer<PathBuf> {
     app.path()
         .app_data_dir()
-        .map(|folder| folder.join("profiles"))
+        .map(|folder| folder.join(name))
         .map_err(|error| format!("this machine has no data folder: {error}"))
 }
 
@@ -126,22 +130,64 @@ fn set_lock(chosen: State<Chosen>, locked: bool) -> Answer<bool> {
 
 #[tauri::command]
 fn list_profiles(app: AppHandle) -> Answer<Vec<Profile>> {
-    Ok(profiles::list(&profiles_folder(&app)?))
+    Ok(profiles::list(&data_folder(&app, "profiles")?))
 }
 
 #[tauri::command]
 fn save_profile(app: AppHandle, name: String, settings: serde_json::Value) -> Answer<Profile> {
-    profiles::save(&profiles_folder(&app)?, &name, &settings)
+    profiles::save(&data_folder(&app, "profiles")?, &name, &settings)
 }
 
 #[tauri::command]
 fn read_profile(app: AppHandle, name: String) -> Answer<serde_json::Value> {
-    profiles::read(&profiles_folder(&app)?, &name)
+    profiles::read(&data_folder(&app, "profiles")?, &name)
 }
 
 #[tauri::command]
 fn delete_profile(app: AppHandle, name: String) -> Answer<()> {
-    profiles::delete(&profiles_folder(&app)?, &name)
+    profiles::delete(&data_folder(&app, "profiles")?, &name)
+}
+
+#[tauri::command]
+fn list_accounts(app: AppHandle) -> Answer<accounts::Store> {
+    accounts::load(&data_folder(&app, "accounts")?)
+}
+
+/// Saves whoever is signed in to the Riot Client right now.
+#[tauri::command]
+async fn capture_account(app: AppHandle, label: String) -> Answer<accounts::Account> {
+    switcher::capture(&data_folder(&app, "accounts")?, None, &label).await
+}
+
+#[tauri::command]
+async fn recapture_account(app: AppHandle, id: String) -> Answer<accounts::Account> {
+    switcher::capture(&data_folder(&app, "accounts")?, Some(&id), "").await
+}
+
+#[tauri::command]
+fn update_account(
+    app: AppHandle,
+    id: String,
+    label: String,
+    region: Option<String>,
+) -> Answer<accounts::Account> {
+    accounts::update(&data_folder(&app, "accounts")?, &id, &label, region)
+}
+
+#[tauri::command]
+fn delete_account(app: AppHandle, id: String) -> Answer<()> {
+    accounts::delete(&data_folder(&app, "accounts")?, &id)
+}
+
+#[tauri::command]
+fn set_launch_league(app: AppHandle, launch: bool) -> Answer<()> {
+    accounts::set_launch_league(&data_folder(&app, "accounts")?, launch)
+}
+
+#[tauri::command]
+async fn switch_account(app: AppHandle, id: String) -> Answer<switcher::Switched> {
+    let folder = data_folder(&app, "accounts")?;
+    switcher::switch(&app, &folder, &id).await
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -161,6 +207,13 @@ pub fn run() {
             save_profile,
             read_profile,
             delete_profile,
+            list_accounts,
+            capture_account,
+            recapture_account,
+            update_account,
+            delete_account,
+            set_launch_league,
+            switch_account,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

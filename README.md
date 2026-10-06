@@ -37,6 +37,16 @@ hand-edited settings get lost. The **Locked / Unlocked** button marks the file
 read-only so the game cannot overwrite it. Applying settings still works while
 locked — the app unlocks, writes, and locks it again.
 
+### Switching accounts
+
+Sign in to the Riot Client with **Stay signed in** checked, then use
+**Accounts → Add signed-in account** in the header. The app keeps a copy of that
+session; picking the account later closes Riot and League, restores the session
+and restarts the client (and League, if you tick the option). No password is
+ever stored. If a saved session has expired, sign in to that account by hand
+once with **Stay signed in** checked and re-capture it from the account's menu.
+Saved sessions sit in the app's data folder, next to the profiles.
+
 ## Where things live
 
 | Path | What it is |
@@ -46,6 +56,8 @@ locked — the app unlocks, writes, and locks it again.
 | `app/src-tauri/src/discovery.rs` | finding League's folder from Riot's own install record |
 | `app/src-tauri/src/config.rs` | reading, writing and locking the settings file |
 | `app/src-tauri/src/profiles.rs` | named copies, kept in the app's own folder |
+| `app/src-tauri/src/riot.rs` | the Riot Client: session file, closing/launching, local API |
+| `app/src-tauri/src/accounts.rs` / `switcher.rs` | saved accounts and their sessions, capture and switch |
 
 The split is deliberate: CI has no League install, so everything that can be
 tested without one lives in  `app/src/lib/` and never imports a Tauri command.
@@ -58,6 +70,8 @@ does not have fails the build rather than silently doing nothing.
 ```bash
 cd app && bun install && bun run tauri dev
 ```
+
+`bun run build:exe` builds a standalone exe without the installer.
 
 `bun run lint` type-checks, checks formatting and runs the tests. The Rust side
 wants `cargo fmt --check` and `cargo clippy --all-targets -- -D warnings`.
