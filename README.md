@@ -71,6 +71,8 @@ does not have fails the build rather than silently doing nothing.
 cd app && bun install && bun run tauri dev
 ```
 
+`bun run build:exe` builds a standalone exe without the installer.
+
 `bun run lint` type-checks, checks formatting and runs the tests. The Rust side
 wants `cargo fmt --check` and `cargo clippy --all-targets -- -D warnings`.
 
