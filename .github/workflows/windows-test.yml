@@ -1,0 +1,32 @@
+name: windows test build
+
+# A Windows exe of any branch, for trying a change on a real League install
+# before it ships. Nothing is published: the exe is a workflow artifact, built
+# without the installer or the updater signature.
+on:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    name: Windows x64
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app/src-tauri
+          key: windows
+      - run: bun install --frozen-lockfile
+        working-directory: app
+      - run: bun run build:exe
+        working-directory: app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lol-config-editor-${{ github.ref_name }}-${{ github.sha }}
+          path: app/src-tauri/target/release/*.exe
+          if-no-files-found: error
+          retention-days: 7
