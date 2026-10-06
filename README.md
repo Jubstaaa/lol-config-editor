@@ -62,6 +62,14 @@ cd app && bun install && bun run tauri dev
 `bun run lint` type-checks, checks formatting and runs the tests. The Rust side
 wants `cargo fmt --check` and `cargo clippy --all-targets -- -D warnings`.
 
+## Trying a branch on Windows
+
+To test a change on a real League install before it ships, run the
+`windows test build` workflow from the Actions tab (or
+`gh workflow run windows-test.yml --ref <branch>`). It builds that branch's exe
+and attaches it to the run as an artifact for a week. Nothing is published, and
+the exe is unsigned, so SmartScreen asks once before it runs.
+
 ## Releasing
 
 Updates are signed with the project's own key, separate from any Apple or
