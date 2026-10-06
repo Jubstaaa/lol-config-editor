@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import AccountSwitcher from './features/accounts/account-switcher'
 import HotkeysPanel from './features/editor/hotkeys-panel'
+import MatchApplyDialog from './features/match/match-apply-dialog'
 import ProfileList from './features/profiles/profile-list'
 import SettingsEditor from './features/editor/settings-editor'
 import { SettingsProvider } from './features/editor/settings.context'
@@ -13,10 +14,12 @@ import { notifyDone, notifyFailed, notifyIdle, notifyProgress } from './lib/runt
 import { checkForUpdate } from './lib/runtime/update'
 import { readSettingOr, writeSetting } from './lib/settings/settings'
 import {
+    applyAndReconnect,
     applyConfig,
     deleteProfile,
     findConfig,
     getErrorMessage,
+    inMatch,
     listProfiles,
     readConfig,
     readProfile,
@@ -31,6 +34,8 @@ import type { Located, Profile } from './lib/runtime/core.types'
 import type { PersistedSettings, SettingRef } from './lib/settings/settings.types'
 
 const HOTKEYS_TAB = 'hotkeys'
+const PENDING_TOAST = 'apply-after-match'
+const MATCH_POLL_MS = 3000
 
 export default function App() {
     // ━━━ LOCAL STATE ━━━
@@ -41,6 +46,9 @@ export default function App() {
     const [tab, setTab] = useState(HOTKEYS_TAB)
     const [busy, setBusy] = useState(false)
     const [ready, setReady] = useState(false)
+    const [matchDialog, setMatchDialog] = useState(false)
+    // Settings waiting for the running match to end before they are written.
+    const [pending, setPending] = useState<PersistedSettings | null>(null)
 
     // ━━━ DERIVED STATE ━━━
     const tabs = useMemo(() => [{ id: HOTKEYS_TAB, label: 'Hotkeys' }, ...TABS], [])
@@ -123,6 +131,11 @@ export default function App() {
             guard(async () => {
                 if (!config) return
 
+                if (await inMatch()) {
+                    setMatchDialog(true)
+                    return
+                }
+
                 notifyProgress('Writing your settings to League')
                 const locked = await applyConfig(config)
                 setLocated(found => (found ? { ...found, locked } : found))
@@ -130,6 +143,30 @@ export default function App() {
             }),
         [config, guard]
     )
+
+    const handleApplyAndReconnect = useCallback(
+        () =>
+            guard(async () => {
+                if (!config) return
+
+                setMatchDialog(false)
+                notifyProgress('Closing the game and rejoining the match')
+                const locked = await applyAndReconnect(config)
+                setLocated(found => (found ? { ...found, locked } : found))
+                notifyDone('Applied — rejoining the match')
+            }),
+        [config, guard]
+    )
+
+    const handleApplyAfterMatch = useCallback(() => {
+        setMatchDialog(false)
+        setPending(config)
+        toast.info('Your settings will be applied when the match ends', {
+            id: PENDING_TOAST,
+            duration: Infinity,
+            action: { label: 'Cancel', onClick: () => setPending(null) },
+        })
+    }, [config])
 
     const handleToggleLock = useCallback(
         () =>
@@ -221,6 +258,26 @@ export default function App() {
     useEffect(() => {
         if (!busy) notifyIdle()
     }, [busy])
+
+    // The game writes its own settings as it closes, so this waits until it is gone.
+    useEffect(() => {
+        if (!pending) return
+
+        const timer = window.setInterval(async () => {
+            if (await inMatch().catch(() => true)) return
+
+            window.clearInterval(timer)
+            setPending(null)
+            toast.dismiss(PENDING_TOAST)
+            await guard(async () => {
+                const locked = await applyConfig(pending)
+                setLocated(found => (found ? { ...found, locked } : found))
+                notifyDone('Match over — settings applied to League')
+            })
+        }, MATCH_POLL_MS)
+
+        return () => window.clearInterval(timer)
+    }, [guard, pending])
 
     // ━━━ RETURN ━━━
     if (!config) {
@@ -340,6 +397,14 @@ export default function App() {
                     </aside>
                 </div>
             </div>
+
+            {matchDialog ? (
+                <MatchApplyDialog
+                    onReconnect={handleApplyAndReconnect}
+                    onAfterMatch={handleApplyAfterMatch}
+                    onCancel={() => setMatchDialog(false)}
+                />
+            ) : null}
 
             <Toaster position='bottom-center' theme='dark' />
         </SettingsProvider>

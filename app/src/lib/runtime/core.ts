@@ -21,6 +21,12 @@ export const applyConfig = (settings: PersistedSettings) => invoke<boolean>('app
 
 export const setLock = (locked: boolean) => invoke<boolean>('set_lock', { locked })
 
+export const inMatch = () => invoke<boolean>('in_match')
+
+/** Closes the game, writes the settings and rejoins the match. Returns whether the file is locked. */
+export const applyAndReconnect = (settings: PersistedSettings) =>
+    invoke<boolean>('apply_and_reconnect', { settings })
+
 export const listProfiles = () => invoke<Profile[]>('list_profiles')
 
 export const saveProfile = (name: string, settings: PersistedSettings) =>

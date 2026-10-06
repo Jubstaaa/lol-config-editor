@@ -1,6 +1,7 @@
 mod accounts;
 mod config;
 mod discovery;
+mod game;
 mod profiles;
 mod riot;
 mod switcher;
@@ -122,6 +123,22 @@ fn apply_config(chosen: State<Chosen>, settings: serde_json::Value) -> Answer<bo
 }
 
 #[tauri::command]
+async fn in_match(chosen: State<'_, Chosen>) -> Answer<bool> {
+    let path = active(&chosen)?;
+    Ok(game::in_match(&path).await)
+}
+
+/// Applies mid-match: closes the game, writes the settings, and rejoins.
+#[tauri::command]
+async fn apply_and_reconnect(
+    chosen: State<'_, Chosen>,
+    settings: serde_json::Value,
+) -> Answer<bool> {
+    let path = active(&chosen)?;
+    game::apply_and_reconnect(&path, &settings).await
+}
+
+#[tauri::command]
 fn set_lock(chosen: State<Chosen>, locked: bool) -> Answer<bool> {
     let path = active(&chosen)?;
     config::set_locked(&path, locked)?;
@@ -202,6 +219,8 @@ pub fn run() {
             use_folder,
             read_config,
             apply_config,
+            in_match,
+            apply_and_reconnect,
             set_lock,
             list_profiles,
             save_profile,

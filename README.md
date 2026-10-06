@@ -37,6 +37,14 @@ hand-edited settings get lost. The **Locked / Unlocked** button marks the file
 read-only so the game cannot overwrite it. Applying settings still works while
 locked — the app unlocks, writes, and locks it again.
 
+### Applying during a match
+
+A match only reads settings when it loads. Pressing **Apply** while one is
+running asks what to do instead: **apply now and reconnect** closes the game
+without letting it save, writes the file, and rejoins the match through the
+League client; **apply after the match** waits for the game to close and writes
+them for the next one.
+
 ### Switching accounts
 
 Sign in to the Riot Client with **Stay signed in** checked, then use
@@ -57,6 +65,7 @@ Saved sessions sit in the app's data folder, next to the profiles.
 | `app/src-tauri/src/config.rs` | reading, writing and locking the settings file |
 | `app/src-tauri/src/profiles.rs` | named copies, kept in the app's own folder |
 | `app/src-tauri/src/riot.rs` | the Riot Client: session file, closing/launching, local API |
+| `app/src-tauri/src/game.rs` | the running match: detecting it, and applying mid-match with a reconnect |
 | `app/src-tauri/src/accounts.rs` / `switcher.rs` | saved accounts and their sessions, capture and switch |
 
 The split is deliberate: CI has no League install, so everything that can be

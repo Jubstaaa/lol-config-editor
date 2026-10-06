@@ -1,15 +1,21 @@
 //! The Riot Client from the outside: where it keeps its session, closing and
 //! starting it, asking its local API who is signed in, and typing into it.
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::{Duration, Instant};
 
 use crate::config::Answer;
 
+/// The game itself, as opposed to the League client around it.
+#[cfg(target_os = "windows")]
+pub const GAME: &str = "League of Legends.exe";
+#[cfg(not(target_os = "windows"))]
+pub const GAME: &str = "League of Legends";
+
 #[cfg(target_os = "windows")]
 const PROCESSES: &[&str] = &[
-    "League of Legends.exe",
+    GAME,
     "LeagueClientUxRender.exe",
     "LeagueClientUx.exe",
     "LeagueClient.exe",
@@ -23,7 +29,7 @@ const PROCESSES: &[&str] = &[
 
 #[cfg(not(target_os = "windows"))]
 const PROCESSES: &[&str] = &[
-    "League of Legends",
+    GAME,
     "LeagueClientUxHelper",
     "LeagueClientUx",
     "LeagueClient",
@@ -114,6 +120,14 @@ fn running() -> Vec<String> {
         .collect()
 }
 
+/// Force-closes a process by name, without giving it the chance to save anything.
+pub fn kill(name: &str) {
+    #[cfg(target_os = "windows")]
+    let _ = quiet("taskkill").args(["/F", "/T", "/IM", name]).output();
+    #[cfg(not(target_os = "windows"))]
+    let _ = quiet("pkill").args(["-9", "-x", name]).output();
+}
+
 fn any_riot_running() -> bool {
     let running = running();
     PROCESSES
@@ -124,10 +138,7 @@ fn any_riot_running() -> bool {
 /// Force-closes Riot and League so neither rewrites the session on the way out.
 pub async fn close_all() -> Answer<()> {
     for name in PROCESSES {
-        #[cfg(target_os = "windows")]
-        let _ = quiet("taskkill").args(["/F", "/T", "/IM", name]).output();
-        #[cfg(not(target_os = "windows"))]
-        let _ = quiet("pkill").args(["-9", "-x", name]).output();
+        kill(name);
     }
 
     let deadline = Instant::now() + Duration::from_secs(15);
@@ -185,13 +196,15 @@ pub struct Identity {
     pub region: Option<String>,
 }
 
-struct Api {
+/// A Riot local API — the Riot Client's, or the League client's — reached
+/// through the port and password its lockfile names.
+pub struct Api {
     http: reqwest::Client,
     port: u16,
     password: String,
 }
 
-enum Reply {
+pub enum Reply {
     Unreachable,
     Refused,
     Body(serde_json::Value),
@@ -200,7 +213,11 @@ enum Reply {
 impl Api {
     /// Reads the lockfile fresh each time: the client may restart on a new port.
     fn connect() -> Option<Api> {
-        let body = std::fs::read_to_string(lockfile().ok()?).ok()?;
+        Api::from_lockfile(&lockfile().ok()?)
+    }
+
+    pub fn from_lockfile(path: &Path) -> Option<Api> {
+        let body = std::fs::read_to_string(path).ok()?;
         let parts: Vec<&str> = body.trim().split(':').collect();
         if parts.len() < 5 {
             return None;
@@ -220,7 +237,7 @@ impl Api {
         })
     }
 
-    async fn get(&self, path: &str) -> Reply {
+    pub async fn get(&self, path: &str) -> Reply {
         let sent = self
             .http
             .get(format!("https://127.0.0.1:{}{path}", self.port))
@@ -242,7 +259,7 @@ impl Api {
         }
     }
 
-    async fn post(&self, path: &str) -> Option<bool> {
+    pub async fn post(&self, path: &str) -> Option<bool> {
         let response = self
             .http
             .post(format!("https://127.0.0.1:{}{path}", self.port))
