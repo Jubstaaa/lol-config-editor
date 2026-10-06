@@ -13,8 +13,6 @@ export interface Account {
     label: string
     riotId: string | null
     region: string | null
-    username: string | null
-    hasPassword: boolean
     /** Unix seconds. */
     capturedAt: number
 }
@@ -26,7 +24,7 @@ export interface AccountStore {
 }
 
 export interface Switched {
-    /** False when the saved session was refused and no password was saved. */
+    /** False when the saved session was refused; the user signs in by hand, then re-captures. */
     signedIn: boolean
     account: Account
 }
@@ -35,7 +33,4 @@ export interface AccountEdit {
     id: string
     label: string
     region: string | null
-    username: string | null
-    password: string | null
-    forgetPassword: boolean
 }

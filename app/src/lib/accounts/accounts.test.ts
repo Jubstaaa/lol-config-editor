@@ -9,8 +9,6 @@ const account = (overrides: Partial<Account>): Account => ({
     label: '',
     riotId: null,
     region: null,
-    username: null,
-    hasPassword: false,
     capturedAt: 0,
     ...overrides,
 })

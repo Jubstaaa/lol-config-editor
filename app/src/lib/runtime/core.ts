@@ -33,8 +33,7 @@ export const deleteProfile = (name: string) => invoke<void>('delete_profile', { 
 export const listAccounts = () => invoke<AccountStore>('list_accounts')
 
 /** Saves whoever is signed in to the Riot Client right now. */
-export const captureAccount = (label: string, username: string | null, password: string | null) =>
-    invoke<Account>('capture_account', { label, username, password })
+export const captureAccount = (label: string) => invoke<Account>('capture_account', { label })
 
 export const recaptureAccount = (id: string) => invoke<Account>('recapture_account', { id })
 

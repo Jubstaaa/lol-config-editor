@@ -12,7 +12,7 @@ use crate::riot;
 #[derive(serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Switched {
-    /// False when the saved session was refused and there was no password to fall back on.
+    /// False when the saved session was refused; the user signs in by hand, then recaptures.
     pub signed_in: bool,
     pub account: Account,
 }
@@ -33,15 +33,9 @@ fn current_session() -> Answer<String> {
     Ok(body)
 }
 
-pub struct Capture {
-    pub label: String,
-    pub username: Option<String>,
-    pub password: Option<String>,
-}
-
 /// Saves whoever is signed in to the Riot Client. With `target`, refreshes that
 /// account's session instead, and refuses if someone else is signed in.
-pub async fn capture(folder: &Path, target: Option<&str>, details: Capture) -> Answer<Account> {
+pub async fn capture(folder: &Path, target: Option<&str>, label: &str) -> Answer<Account> {
     if riot::signed_in().await != Some(true) {
         return Err("sign in to the Riot Client first, with \"Stay signed in\" checked".into());
     }
@@ -77,8 +71,6 @@ pub async fn capture(folder: &Path, target: Option<&str>, details: Capture) -> A
                 label: String::new(),
                 riot_id: None,
                 region: None,
-                username: None,
-                has_password: false,
                 captured_at: 0,
             });
             id
@@ -86,19 +78,10 @@ pub async fn capture(folder: &Path, target: Option<&str>, details: Capture) -> A
     };
 
     accounts::write_snapshot(folder, &id, &body)?;
-    if let Some(password) = details.password.as_deref().filter(|p| !p.is_empty()) {
-        accounts::set_password(&id, password)?;
-    }
 
     let account = store.find_mut(&id)?;
-    if !details.label.trim().is_empty() {
-        account.label = details.label.trim().to_string();
-    }
-    if let Some(username) = details.username.filter(|name| !name.trim().is_empty()) {
-        account.username = Some(username.trim().to_string());
-    }
-    if details.password.is_some_and(|p| !p.is_empty()) {
-        account.has_password = true;
+    if !label.trim().is_empty() {
+        account.label = label.trim().to_string();
     }
     account.riot_id = identity.riot_id.or(account.riot_id.take());
     account.region = identity.region.or(account.region.take());
@@ -158,32 +141,11 @@ pub async fn switch(app: &AppHandle, folder: &Path, id: &str) -> Answer<Switched
     }
 
     progress(app, "Signing in");
-    let mut signed_in = riot::wait_until_signed_in(Duration::from_secs(15)).await;
-
-    if !signed_in {
-        let password = if target.has_password {
-            accounts::password(id)?
-        } else {
-            None
-        };
-        let (Some(username), Some(password)) = (target.username.as_deref(), password) else {
-            return Ok(Switched {
-                signed_in: false,
-                account: target,
-            });
-        };
-
-        progress(app, "Saved session expired — signing in with your password");
-        // The sign-in form renders a moment after the API comes up.
-        tokio::time::sleep(Duration::from_secs(4)).await;
-        riot::type_credentials(username, &password)?;
-
-        signed_in = riot::wait_until_signed_in(Duration::from_secs(45)).await;
-        if !signed_in {
-            return Err(
-                "Riot did not accept the sign-in — it may be asking for a captcha or a code".into(),
-            );
-        }
+    if !riot::wait_until_signed_in(Duration::from_secs(15)).await {
+        return Ok(Switched {
+            signed_in: false,
+            account: target,
+        });
     }
 
     let identity = riot::identity().await;

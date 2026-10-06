@@ -161,40 +161,21 @@ fn list_accounts(app: AppHandle) -> Answer<accounts::Store> {
 
 /// Saves whoever is signed in to the Riot Client right now.
 #[tauri::command]
-async fn capture_account(
-    app: AppHandle,
-    label: String,
-    username: Option<String>,
-    password: Option<String>,
-) -> Answer<accounts::Account> {
-    let details = switcher::Capture {
-        label,
-        username,
-        password,
-    };
-    switcher::capture(&accounts_folder(&app)?, None, details).await
+async fn capture_account(app: AppHandle, label: String) -> Answer<accounts::Account> {
+    switcher::capture(&accounts_folder(&app)?, None, &label).await
 }
 
 #[tauri::command]
 async fn recapture_account(app: AppHandle, id: String) -> Answer<accounts::Account> {
-    let details = switcher::Capture {
-        label: String::new(),
-        username: None,
-        password: None,
-    };
-    switcher::capture(&accounts_folder(&app)?, Some(&id), details).await
+    switcher::capture(&accounts_folder(&app)?, Some(&id), "").await
 }
 
-/// An empty password leaves the saved one alone; `forget_password` removes it.
 #[tauri::command]
 fn update_account(
     app: AppHandle,
     id: String,
     label: String,
     region: Option<String>,
-    username: Option<String>,
-    password: Option<String>,
-    forget_password: bool,
 ) -> Answer<accounts::Account> {
     let folder = accounts_folder(&app)?;
     let mut store = accounts::load(&folder)?;
@@ -204,17 +185,6 @@ fn update_account(
     account.region = region
         .map(|region| region.trim().to_uppercase())
         .filter(|region| !region.is_empty());
-    account.username = username
-        .map(|name| name.trim().to_string())
-        .filter(|name| !name.is_empty());
-
-    if forget_password {
-        accounts::clear_password(&id)?;
-        account.has_password = false;
-    } else if let Some(password) = password.filter(|password| !password.is_empty()) {
-        accounts::set_password(&id, &password)?;
-        account.has_password = true;
-    }
 
     let account = account.clone();
     accounts::save(&folder, &store)?;
@@ -227,7 +197,6 @@ fn delete_account(app: AppHandle, id: String) -> Answer<()> {
     let mut store = accounts::load(&folder)?;
     store.find(&id)?;
 
-    accounts::clear_password(&id)?;
     accounts::remove_snapshot(&folder, &id)?;
     store.accounts.retain(|account| account.id != id);
     if store.active_id.as_deref() == Some(id.as_str()) {

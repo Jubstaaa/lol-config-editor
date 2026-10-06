@@ -75,10 +75,10 @@ export default function AccountSwitcher({ busy, guard }: AccountSwitcherProps) {
     )
 
     const handleCapture = useCallback(
-        (label: string, username: string | null, password: string | null) =>
+        (label: string) =>
             guard(async () => {
                 notifyProgress('Reading the signed-in account')
-                const saved = await captureAccount(label, username, password)
+                const saved = await captureAccount(label)
                 await reload()
                 setDialog(null)
                 notifyDone(`Saved ${accountName(saved)}`)

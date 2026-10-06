@@ -9,7 +9,7 @@ interface AccountDialogProps {
     /** Null when adding whoever is signed in to the Riot Client. */
     account: Account | null
     onCancel: () => void
-    onCapture: (label: string, username: string | null, password: string | null) => void
+    onCapture: (label: string) => void
     onSave: (edit: AccountEdit) => void
     onRecapture: (id: string) => void
     onDelete: (id: string) => void
@@ -29,14 +29,11 @@ export default function AccountDialog({
 }: AccountDialogProps) {
     const [label, setLabel] = useState(account?.label ?? '')
     const [region, setRegion] = useState(account?.region ?? '')
-    const [username, setUsername] = useState(account?.username ?? '')
-    const [password, setPassword] = useState('')
-    const [forgetPassword, setForgetPassword] = useState(false)
     const [confirmDelete, setConfirmDelete] = useState(false)
 
     const handleSubmit = () => {
         if (!account) {
-            onCapture(label, username || null, password || null)
+            onCapture(label)
             return
         }
 
@@ -44,9 +41,6 @@ export default function AccountDialog({
             id: account.id,
             label,
             region: region || null,
-            username: username || null,
-            password: password || null,
-            forgetPassword,
         })
     }
 
@@ -97,41 +91,6 @@ export default function AccountDialog({
                         />
                     </label>
                 ) : null}
-
-                <fieldset className='space-y-2 border border-gold-600/25 p-3'>
-                    <legend className='px-1 text-[11px] text-gold-500'>Password fallback (optional)</legend>
-                    <p className='text-[11px] text-gold-600'>
-                        Used only when the saved session has expired. The password is kept in your system
-                        keychain and typed into the Riot Client for you.
-                    </p>
-                    <input
-                        type='text'
-                        value={username}
-                        autoComplete='off'
-                        placeholder='Riot username (not Riot ID)'
-                        className={fieldClass}
-                        onChange={event => setUsername(event.target.value)}
-                    />
-                    <input
-                        type='password'
-                        value={password}
-                        autoComplete='new-password'
-                        disabled={forgetPassword}
-                        placeholder={account?.hasPassword ? 'Saved — type to replace' : 'Password'}
-                        className={`${fieldClass} disabled:opacity-50`}
-                        onChange={event => setPassword(event.target.value)}
-                    />
-                    {account?.hasPassword ? (
-                        <label className='flex items-center gap-2 text-[11px] text-gold-500'>
-                            <input
-                                type='checkbox'
-                                checked={forgetPassword}
-                                onChange={event => setForgetPassword(event.target.checked)}
-                            />
-                            Forget the saved password
-                        </label>
-                    ) : null}
-                </fieldset>
 
                 {account ? (
                     <div className='flex flex-wrap gap-2'>

@@ -42,10 +42,10 @@ locked — the app unlocks, writes, and locks it again.
 Sign in to the Riot Client with **Stay signed in** checked, then use
 **Accounts → Add signed-in account** in the header. The app keeps a copy of that
 session; picking the account later closes Riot and League, restores the session
-and restarts the client (and League, if you tick the option). If a session has
-expired and you saved a password, the app types it into the Riot sign-in form —
-the password lives only in the system keychain. On macOS this needs
-**System Settings → Privacy & Security → Accessibility** for the app.
+and restarts the client (and League, if you tick the option). No password is
+ever stored. If a saved session has expired, sign in to that account by hand
+once with **Stay signed in** checked and re-capture it from the account's menu.
+Saved sessions sit in the app's data folder, next to the profiles.
 
 ## Where things live
 
@@ -56,8 +56,8 @@ the password lives only in the system keychain. On macOS this needs
 | `app/src-tauri/src/discovery.rs` | finding League's folder from Riot's own install record |
 | `app/src-tauri/src/config.rs` | reading, writing and locking the settings file |
 | `app/src-tauri/src/profiles.rs` | named copies, kept in the app's own folder |
-| `app/src-tauri/src/riot.rs` | the Riot Client: session file, closing/launching, local API, typing |
-| `app/src-tauri/src/accounts.rs` / `switcher.rs` | saved accounts, keychain passwords, capture and switch |
+| `app/src-tauri/src/riot.rs` | the Riot Client: session file, closing/launching, local API |
+| `app/src-tauri/src/accounts.rs` / `switcher.rs` | saved accounts and their sessions, capture and switch |
 
 The split is deliberate: CI has no League install, so everything that can be
 tested without one lives in  `app/src/lib/` and never imports a Tauri command.

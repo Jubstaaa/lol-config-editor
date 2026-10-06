@@ -1,11 +1,9 @@
 //! Saved Riot accounts: a list in the app's data folder, one session snapshot
-//! per account beside it, and passwords only ever in the OS keychain.
+//! per account beside it. No passwords are ever stored.
 
 use std::path::{Path, PathBuf};
 
 use crate::config::Answer;
-
-const KEYCHAIN_SERVICE: &str = "lol-config-editor";
 
 #[derive(Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -14,8 +12,6 @@ pub struct Account {
     pub label: String,
     pub riot_id: Option<String>,
     pub region: Option<String>,
-    pub username: Option<String>,
-    pub has_password: bool,
     pub captured_at: u64,
 }
 
@@ -126,30 +122,4 @@ pub fn remove_snapshot(folder: &Path, id: &str) -> Answer<()> {
             .map_err(|error| format!("could not delete the saved session: {error}"))?;
     }
     Ok(())
-}
-
-fn keychain(id: &str) -> Answer<keyring::Entry> {
-    keyring::Entry::new(KEYCHAIN_SERVICE, checked(id)?)
-        .map_err(|error| format!("could not open the keychain: {error}"))
-}
-
-pub fn set_password(id: &str, password: &str) -> Answer<()> {
-    keychain(id)?
-        .set_password(password)
-        .map_err(|error| format!("could not save the password: {error}"))
-}
-
-pub fn password(id: &str) -> Answer<Option<String>> {
-    match keychain(id)?.get_password() {
-        Ok(password) => Ok(Some(password)),
-        Err(keyring::Error::NoEntry) => Ok(None),
-        Err(error) => Err(format!("could not read the password: {error}")),
-    }
-}
-
-pub fn clear_password(id: &str) -> Answer<()> {
-    match keychain(id)?.delete_credential() {
-        Ok(()) | Err(keyring::Error::NoEntry) => Ok(()),
-        Err(error) => Err(format!("could not remove the password: {error}")),
-    }
 }
