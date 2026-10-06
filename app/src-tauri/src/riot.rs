@@ -96,7 +96,7 @@ fn quiet(program: &str) -> Command {
 }
 
 /// Lowercased names of everything running.
-pub fn running() -> Vec<String> {
+fn running() -> Vec<String> {
     #[cfg(target_os = "windows")]
     let output = quiet("tasklist").args(["/FO", "CSV", "/NH"]).output();
     #[cfg(not(target_os = "windows"))]
@@ -118,10 +118,6 @@ pub fn running() -> Vec<String> {
         })
         .map(str::to_lowercase)
         .collect()
-}
-
-pub fn is_running(name: &str) -> bool {
-    running().contains(&name.to_lowercase())
 }
 
 /// Force-closes a process by name, without giving it the chance to save anything.

@@ -123,8 +123,9 @@ fn apply_config(chosen: State<Chosen>, settings: serde_json::Value) -> Answer<bo
 }
 
 #[tauri::command]
-fn in_match() -> bool {
-    game::in_match()
+async fn in_match(chosen: State<'_, Chosen>) -> Answer<bool> {
+    let path = active(&chosen)?;
+    Ok(game::in_match(&path).await)
 }
 
 /// Applies mid-match: closes the game, writes the settings, and rejoins.
