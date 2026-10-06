@@ -56,10 +56,11 @@ fn recall(app: &AppHandle) -> Option<PathBuf> {
     path.is_file().then_some(path)
 }
 
-fn profiles_folder(app: &AppHandle) -> Answer<PathBuf> {
+/// A folder of the app's own, `profiles` or `accounts`, inside its data folder.
+fn data_folder(app: &AppHandle, name: &str) -> Answer<PathBuf> {
     app.path()
         .app_data_dir()
-        .map(|folder| folder.join("profiles"))
+        .map(|folder| folder.join(name))
         .map_err(|error| format!("this machine has no data folder: {error}"))
 }
 
@@ -129,45 +130,38 @@ fn set_lock(chosen: State<Chosen>, locked: bool) -> Answer<bool> {
 
 #[tauri::command]
 fn list_profiles(app: AppHandle) -> Answer<Vec<Profile>> {
-    Ok(profiles::list(&profiles_folder(&app)?))
+    Ok(profiles::list(&data_folder(&app, "profiles")?))
 }
 
 #[tauri::command]
 fn save_profile(app: AppHandle, name: String, settings: serde_json::Value) -> Answer<Profile> {
-    profiles::save(&profiles_folder(&app)?, &name, &settings)
+    profiles::save(&data_folder(&app, "profiles")?, &name, &settings)
 }
 
 #[tauri::command]
 fn read_profile(app: AppHandle, name: String) -> Answer<serde_json::Value> {
-    profiles::read(&profiles_folder(&app)?, &name)
+    profiles::read(&data_folder(&app, "profiles")?, &name)
 }
 
 #[tauri::command]
 fn delete_profile(app: AppHandle, name: String) -> Answer<()> {
-    profiles::delete(&profiles_folder(&app)?, &name)
-}
-
-fn accounts_folder(app: &AppHandle) -> Answer<PathBuf> {
-    app.path()
-        .app_data_dir()
-        .map(|folder| folder.join("accounts"))
-        .map_err(|error| format!("this machine has no data folder: {error}"))
+    profiles::delete(&data_folder(&app, "profiles")?, &name)
 }
 
 #[tauri::command]
 fn list_accounts(app: AppHandle) -> Answer<accounts::Store> {
-    accounts::load(&accounts_folder(&app)?)
+    accounts::load(&data_folder(&app, "accounts")?)
 }
 
 /// Saves whoever is signed in to the Riot Client right now.
 #[tauri::command]
 async fn capture_account(app: AppHandle, label: String) -> Answer<accounts::Account> {
-    switcher::capture(&accounts_folder(&app)?, None, &label).await
+    switcher::capture(&data_folder(&app, "accounts")?, None, &label).await
 }
 
 #[tauri::command]
 async fn recapture_account(app: AppHandle, id: String) -> Answer<accounts::Account> {
-    switcher::capture(&accounts_folder(&app)?, Some(&id), "").await
+    switcher::capture(&data_folder(&app, "accounts")?, Some(&id), "").await
 }
 
 #[tauri::command]
@@ -177,45 +171,22 @@ fn update_account(
     label: String,
     region: Option<String>,
 ) -> Answer<accounts::Account> {
-    let folder = accounts_folder(&app)?;
-    let mut store = accounts::load(&folder)?;
-    let account = store.find_mut(&id)?;
-
-    account.label = label.trim().to_string();
-    account.region = region
-        .map(|region| region.trim().to_uppercase())
-        .filter(|region| !region.is_empty());
-
-    let account = account.clone();
-    accounts::save(&folder, &store)?;
-    Ok(account)
+    accounts::update(&data_folder(&app, "accounts")?, &id, &label, region)
 }
 
 #[tauri::command]
 fn delete_account(app: AppHandle, id: String) -> Answer<()> {
-    let folder = accounts_folder(&app)?;
-    let mut store = accounts::load(&folder)?;
-    store.find(&id)?;
-
-    accounts::remove_snapshot(&folder, &id)?;
-    store.accounts.retain(|account| account.id != id);
-    if store.active_id.as_deref() == Some(id.as_str()) {
-        store.active_id = None;
-    }
-    accounts::save(&folder, &store)
+    accounts::delete(&data_folder(&app, "accounts")?, &id)
 }
 
 #[tauri::command]
 fn set_launch_league(app: AppHandle, launch: bool) -> Answer<()> {
-    let folder = accounts_folder(&app)?;
-    let mut store = accounts::load(&folder)?;
-    store.launch_league = launch;
-    accounts::save(&folder, &store)
+    accounts::set_launch_league(&data_folder(&app, "accounts")?, launch)
 }
 
 #[tauri::command]
 async fn switch_account(app: AppHandle, id: String) -> Answer<switcher::Switched> {
-    let folder = accounts_folder(&app)?;
+    let folder = data_folder(&app, "accounts")?;
     switcher::switch(&app, &folder, &id).await
 }
 

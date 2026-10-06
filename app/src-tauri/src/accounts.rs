@@ -115,11 +115,43 @@ pub fn write_snapshot(folder: &Path, id: &str, body: &str) -> Answer<()> {
     Ok(())
 }
 
-pub fn remove_snapshot(folder: &Path, id: &str) -> Answer<()> {
+fn remove_snapshot(folder: &Path, id: &str) -> Answer<()> {
     let account_folder = folder.join(checked(id)?);
     if account_folder.is_dir() {
         std::fs::remove_dir_all(&account_folder)
             .map_err(|error| format!("could not delete the saved session: {error}"))?;
     }
     Ok(())
+}
+
+pub fn update(folder: &Path, id: &str, label: &str, region: Option<String>) -> Answer<Account> {
+    let mut store = load(folder)?;
+    let account = store.find_mut(id)?;
+
+    account.label = label.trim().to_string();
+    account.region = region
+        .map(|region| region.trim().to_uppercase())
+        .filter(|region| !region.is_empty());
+
+    let account = account.clone();
+    save(folder, &store)?;
+    Ok(account)
+}
+
+pub fn delete(folder: &Path, id: &str) -> Answer<()> {
+    let mut store = load(folder)?;
+    store.find(id)?;
+
+    remove_snapshot(folder, id)?;
+    store.accounts.retain(|account| account.id != id);
+    if store.active_id.as_deref() == Some(id) {
+        store.active_id = None;
+    }
+    save(folder, &store)
+}
+
+pub fn set_launch_league(folder: &Path, launch: bool) -> Answer<()> {
+    let mut store = load(folder)?;
+    store.launch_league = launch;
+    save(folder, &store)
 }
