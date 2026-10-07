@@ -2,6 +2,9 @@
 
 Thanks for wanting to help. Bug reports, ideas and pull requests are all welcome.
 
+By contributing you agree that your work is released under the project's
+[MIT License](LICENSE).
+
 ## Before you start
 
 For anything bigger than a small fix, open an issue first and say what you have

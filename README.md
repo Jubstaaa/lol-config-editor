@@ -133,3 +133,7 @@ up that flag, so this only applies to the first install.
 ## Built with
 
 [Tauri 2](https://tauri.app), React 19, Tailwind v4, and Bun.
+
+## License
+
+[MIT](LICENSE)

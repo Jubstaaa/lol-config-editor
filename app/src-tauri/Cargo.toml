@@ -3,6 +3,7 @@ name = "lol-config-editor"
 version = "2.0.0"
 description = "Edit and switch League of Legends settings without launching the game"
 authors = ["İlker Balcılar"]
+license = "MIT"
 edition = "2021"
 
 [lib]
