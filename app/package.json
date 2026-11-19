@@ -3,6 +3,7 @@
     "private": true,
     "license": "MIT",
     "version": "2.0.0",
+    "packageManager": "bun@1.4.4",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -12,7 +13,8 @@
         "build:exe": "tauri build --no-bundle",
         "lint": "tsc --noEmit && prettier --check . && vitest run",
         "format": "prettier --write .",
-        "test": "vitest run"
+        "test": "vitest run",
+        "audit": "bun audit --audit-level=high"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.3.3",
