@@ -5,10 +5,10 @@ import type { GroupDef, TabDef } from '../../lib/catalog/catalog.types'
 const Group = ({ group }: { group: GroupDef }) => (
     <section className='space-y-2'>
         <header>
-            <h3 className='text-[11px] font-semibold tracking-[0.18em] text-gold-400 uppercase'>
+            <h2 className='text-[11px] font-semibold tracking-[0.18em] text-gold-400 uppercase'>
                 {group.label}
-            </h3>
-            {group.hint ? <p className='mt-0.5 text-[11px] text-gold-600'>{group.hint}</p> : null}
+            </h2>
+            {group.hint ? <p className='mt-0.5 text-[11px] text-gold-500'>{group.hint}</p> : null}
         </header>
 
         <div className='grid grid-cols-1 gap-x-8 gap-y-0.5 md:grid-cols-2'>

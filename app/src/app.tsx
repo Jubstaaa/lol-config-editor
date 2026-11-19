@@ -283,7 +283,7 @@ export default function App() {
     if (!config) {
         return (
             <>
-                <div className='grid h-full place-items-center p-8 text-center'>
+                <main className='grid h-full place-items-center p-8 text-center'>
                     <div className='max-w-md space-y-4'>
                         <h1 className='text-lg font-semibold text-gold-400'>LoL Config Editor</h1>
                         <p className='text-gold-500'>
@@ -299,11 +299,11 @@ export default function App() {
                         >
                             Choose the folder
                         </button>
-                        <p className='text-[11px] text-gold-600'>
+                        <p className='text-[11px] text-gold-500'>
                             League writes its settings only after you have played at least one game.
                         </p>
                     </div>
-                </div>
+                </main>
                 <Toaster position='bottom-center' theme='dark' />
             </>
         )
@@ -315,7 +315,7 @@ export default function App() {
                 <header className='flex items-center justify-between gap-4 border-b border-gold-600/25 px-4 py-2.5'>
                     <div className='flex min-w-0 items-center gap-3'>
                         <h1 className='shrink-0 font-semibold text-gold-400'>LoL Config Editor</h1>
-                        <span className='truncate text-[11px] text-gold-600' title={located?.path}>
+                        <span className='truncate text-[11px] text-gold-500' title={located?.path}>
                             {located?.path}
                         </span>
                     </div>
@@ -326,6 +326,7 @@ export default function App() {
                             type='button'
                             disabled={busy}
                             title='League rewrites this file when it exits. Locking it keeps your settings.'
+                            aria-pressed={located?.locked ?? false}
                             className='border border-gold-600/40 px-3 py-1.5 text-xs text-gold-300 hover:border-gold-400 disabled:opacity-50'
                             onClick={handleToggleLock}
                         >
@@ -343,11 +344,15 @@ export default function App() {
                 </header>
 
                 <div className='flex min-h-0 flex-1'>
-                    <nav className='flex w-40 shrink-0 flex-col border-r border-gold-600/25 py-2'>
+                    <nav
+                        aria-label='Settings'
+                        className='flex w-40 shrink-0 flex-col border-r border-gold-600/25 py-2'
+                    >
                         {tabs.map(item => (
                             <button
                                 key={item.id}
                                 type='button'
+                                aria-current={item.id === tab ? 'page' : undefined}
                                 className={`px-4 py-2 text-left transition-colors ${
                                     item.id === tab
                                         ? 'border-l-2 border-gold-400 bg-ink-700 text-gold-400'
@@ -373,7 +378,8 @@ export default function App() {
                             type='text'
                             value={profileName}
                             placeholder='Profile name'
-                            className='border border-gold-600/40 bg-ink-800 px-2.5 py-1.5 text-gold-300 placeholder:text-gold-600 focus:border-gold-400'
+                            aria-label='Profile name'
+                            className='border border-gold-600/40 bg-ink-800 px-2.5 py-1.5 text-gold-300 placeholder:text-gold-500 focus:border-gold-400'
                             onChange={pointer => setProfileName(pointer.target.value)}
                         />
                         <button

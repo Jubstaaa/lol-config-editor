@@ -147,13 +147,13 @@ export default function AccountSwitcher({ busy, guard }: AccountSwitcherProps) {
                 onClick={() => setOpen(value => !value)}
             >
                 <span className='truncate'>{active ? accountName(active) : 'Accounts'}</span>
-                <span className='text-gold-600'>▾</span>
+                <span className='text-gold-500'>▾</span>
             </button>
 
             {open ? (
                 <div className='absolute right-0 z-40 mt-1 w-72 border border-gold-600/50 bg-ink-800 shadow-lg'>
                     {accounts.length === 0 ? (
-                        <p className='px-3 py-3 text-[11px] text-gold-600'>No saved accounts yet.</p>
+                        <p className='px-3 py-3 text-[11px] text-gold-500'>No saved accounts yet.</p>
                     ) : (
                         <ul className='max-h-80 divide-y divide-gold-600/15 overflow-y-auto'>
                             {accounts.map(account => (
@@ -173,7 +173,7 @@ export default function AccountSwitcher({ busy, guard }: AccountSwitcherProps) {
                                         >
                                             {accountName(account)}
                                         </span>
-                                        <span className='block truncate text-[11px] text-gold-600'>
+                                        <span className='block truncate text-[11px] text-gold-500'>
                                             {accountDetail(account)}
                                         </span>
                                     </button>
@@ -181,7 +181,7 @@ export default function AccountSwitcher({ busy, guard }: AccountSwitcherProps) {
                                         type='button'
                                         aria-label={`Edit ${accountName(account)}`}
                                         disabled={busy}
-                                        className='px-3 py-2 text-gold-600 hover:text-gold-300 disabled:opacity-50'
+                                        className='px-3 py-2 text-gold-500 hover:text-gold-300 disabled:opacity-50'
                                         onClick={() => {
                                             setOpen(false)
                                             setDialog({ account })

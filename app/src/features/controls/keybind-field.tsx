@@ -31,10 +31,11 @@ export default function KeybindField({ field, value, bare, onBind }: KeybindFiel
             <button
                 type='button'
                 title={field.label}
+                aria-label={`${field.label}: ${shown || 'Unbound'}`}
                 className={`w-full min-w-0 truncate border px-2 py-1.5 text-xs transition-colors ${
                     shown
                         ? 'border-gold-600/40 bg-ink-800 text-gold-300 hover:border-gold-400'
-                        : 'border-ink-500 bg-ink-800/50 text-gold-600 hover:border-gold-600'
+                        : 'border-ink-500 bg-ink-800/50 text-gold-500 hover:border-gold-600'
                 }`}
                 onClick={() => setCapturing(true)}
             >

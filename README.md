@@ -60,7 +60,8 @@ Saved sessions sit in the app's data folder, next to the profiles.
 | Path | What it is |
 |---|---|
 |  `app/src/lib/` | the settings model: read, upsert, keybind parsing, the catalogue. Pure, and fully tested |
-| `app/src/features/` | the editor — controls, hotkey tables, profiles |
+| `app/src/features/` | the editor — controls, hotkey tables, profiles, accounts, the match dialog |
+| `app/src/components/` | UI shared by several features: the modal every dialog is built on |
 | `app/src-tauri/src/discovery.rs` | finding League's folder from Riot's own install record |
 | `app/src-tauri/src/config.rs` | reading, writing and locking the settings file |
 | `app/src-tauri/src/profiles.rs` | named copies, kept in the app's own folder |
