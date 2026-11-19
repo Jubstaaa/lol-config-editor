@@ -35,7 +35,7 @@ jobs:
         working-directory: app
       - name: Stamp the version from the tag
         run: bun run scripts/set-version.ts "${{ github.ref_name }}"
-      - uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # v0.6.2
+      - uses: tauri-apps/tauri-action@1deb371b0cd8bd54025b384f1cd735e725c4060f # v1.0.0
         with:
           projectPath: app
           tagName: ${{ github.ref_name }}
@@ -97,7 +97,7 @@ jobs:
         working-directory: app
       - name: Stamp the version from the tag
         run: bun run scripts/set-version.ts "${{ inputs.tag }}"
-      - uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # v0.6.2
+      - uses: tauri-apps/tauri-action@1deb371b0cd8bd54025b384f1cd735e725c4060f # v1.0.0
         with:
           projectPath: app
           tagName: ${{ inputs.tag }}
