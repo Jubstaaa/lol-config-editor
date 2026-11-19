@@ -49,5 +49,5 @@ on a real League install. In the pull request, say what you tested and how.
 ## How pull requests land
 
 Maintainers may push small fixes to your branch before merging, so leave
-"Allow edits by maintainers" on. Pull requests are squash-merged and released
-with the next version tag.
+"Allow edits by maintainers" on. Pull requests merge once the `app (rust + typescript)`
+check is green, and ship with the next version tag.

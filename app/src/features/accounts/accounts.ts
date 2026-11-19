@@ -1,4 +1,4 @@
-import type { Account } from '../runtime/core.types'
+import type { Account } from '../../lib/runtime/core.types'
 
 /** What the player called it, else the Riot ID, else a placeholder. */
 export const accountName = (account: Account): string =>

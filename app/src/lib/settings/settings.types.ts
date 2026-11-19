@@ -1,5 +1,5 @@
 /** One `name = value` pair. League stores every value as a string, floats included. */
-export interface Setting {
+interface Setting {
     name: string
     value: string
 }

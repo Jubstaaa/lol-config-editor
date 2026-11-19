@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import AccountDialog from './account-dialog'
-import { accountDetail, accountName, sortAccounts } from '../../lib/accounts/accounts'
+import { accountDetail, accountName, sortAccounts } from './accounts'
 import { notifyDone, notifyProgress } from '../../lib/runtime/notify'
 import {
     captureAccount,

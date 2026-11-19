@@ -14,9 +14,6 @@ export type Chord = string[]
  */
 export type Binding = Chord[]
 
-export const PRIMARY = 0
-export const SECONDARY = 1
-
 const TOKEN = /\[([^\]]*)\]/g
 
 const parseChord = (part: string): Chord => [...part.matchAll(TOKEN)].map(match => match[1])
