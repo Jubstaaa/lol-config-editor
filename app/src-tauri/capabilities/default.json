@@ -1,13 +1,14 @@
 {
     "$schema": "../gen/schemas/desktop-schema.json",
     "identifier": "default",
-    "description": "Capability for the main window",
+    "description": "Only what the renderer calls: switch-progress events, the folder picker, and checking for and installing an update",
     "windows": ["main"],
     "permissions": [
-        "core:default",
+        "core:event:allow-listen",
+        "core:event:allow-unlisten",
         "dialog:allow-open",
-        "updater:default",
-        "process:default",
-        "core:app:allow-version"
+        "updater:allow-check",
+        "updater:allow-download-and-install",
+        "process:allow-restart"
     ]
 }
