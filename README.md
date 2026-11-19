@@ -84,7 +84,9 @@ cd app && bun install && bun run tauri dev
 `bun run build:exe` builds a standalone exe without the installer.
 
 `bun run lint` type-checks, checks formatting and runs the tests. The Rust side
-wants `cargo fmt --check` and `cargo clippy --all-targets -- -D warnings`.
+wants `cargo fmt --check`, `cargo clippy --all-targets -- -D warnings` and
+`cargo test`; its tests sit at the bottom of each module and work on temporary
+folders, so they need no League install either.
 
 ## Trying a branch on Windows
 
