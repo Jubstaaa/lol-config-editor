@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { accountDetail, accountName, sortAccounts } from './accounts'
 
-import type { Account } from '../runtime/core.types'
+import type { Account } from '../../lib/runtime/core.types'
 
 const account = (overrides: Partial<Account>): Account => ({
     id: 'a1',

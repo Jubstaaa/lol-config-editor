@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import Modal from '../../components/modal'
-import { accountName } from '../../lib/accounts/accounts'
+import { accountName } from './accounts'
 
 import type { Account, AccountEdit } from '../../lib/runtime/core.types'
 
