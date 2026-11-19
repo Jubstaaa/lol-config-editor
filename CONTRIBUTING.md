@@ -29,11 +29,12 @@ Run the same checks CI runs:
 
 ```bash
 cd app && bun run lint
-cd src-tauri && cargo fmt --check && cargo clippy --all-targets -- -D warnings
+cd src-tauri && cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test
 ```
 
 - Keep anything that can be tested without League in `app/src/lib/`, with tests
-  beside it. CI has no League install.
+  beside it. CI has no League install. On the Rust side, file handling gets a
+  `#[cfg(test)]` module working on a `tempfile` folder.
 - Tauri commands in `lib.rs` stay one line and hand the work to their module.
 - Use [Conventional Commits](https://www.conventionalcommits.org):
   `feat(accounts): …`, `fix(config): …`.

@@ -96,3 +96,42 @@ pub fn settings_under(chosen: &Path) -> Option<PathBuf> {
         direct.is_file().then_some(direct)
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn game_folder() -> tempfile::TempDir {
+        let root = tempfile::tempdir().unwrap();
+        std::fs::create_dir(root.path().join("Config")).unwrap();
+        std::fs::write(
+            root.path().join("Config").join("PersistedSettings.json"),
+            "{}",
+        )
+        .unwrap();
+        root
+    }
+
+    #[test]
+    fn the_game_folder_or_its_config_folder_are_both_accepted() {
+        let root = game_folder();
+        let expected = root.path().join("Config").join("PersistedSettings.json");
+
+        assert_eq!(settings_under(root.path()), Some(expected.clone()));
+        assert_eq!(settings_under(&root.path().join("Config")), Some(expected));
+    }
+
+    #[test]
+    fn a_folder_without_settings_is_refused() {
+        let empty = tempfile::tempdir().unwrap();
+        assert_eq!(settings_under(empty.path()), None);
+    }
+
+    #[test]
+    fn the_game_folder_is_the_client_executable_s_parent() {
+        assert_eq!(
+            game_root_of("/Games/League of Legends/LeagueClient.app"),
+            Some(PathBuf::from("/Games/League of Legends"))
+        );
+    }
+}

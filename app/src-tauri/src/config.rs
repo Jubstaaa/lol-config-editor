@@ -57,3 +57,63 @@ pub fn write(path: &Path, settings: &serde_json::Value) -> Answer<bool> {
 
     written.map(|()| locked)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const SETTINGS: &str = r#"{"description":"","files":[{"name":"Input.ini","sections":[{"name":"GameEvents","settings":[{"name":"evtCastSpell1","value":"[q]"}]}]}]}"#;
+
+    fn settings_file(folder: &tempfile::TempDir) -> std::path::PathBuf {
+        let path = folder.path().join("PersistedSettings.json");
+        std::fs::write(&path, SETTINGS).unwrap();
+        path
+    }
+
+    #[test]
+    fn write_then_read_returns_the_same_settings() {
+        let folder = tempfile::tempdir().unwrap();
+        let path = settings_file(&folder);
+        let mut settings = read(&path).unwrap();
+        settings["files"][0]["sections"][0]["settings"][0]["value"] = "[w]".into();
+
+        let still_locked = write(&path, &settings).unwrap();
+
+        assert!(!still_locked);
+        assert_eq!(read(&path).unwrap(), settings);
+    }
+
+    #[test]
+    fn writing_a_locked_file_succeeds_and_keeps_it_locked() {
+        let folder = tempfile::tempdir().unwrap();
+        let path = settings_file(&folder);
+        set_locked(&path, true).unwrap();
+        let settings = read(&path).unwrap();
+
+        assert!(write(&path, &settings).unwrap());
+        assert!(is_locked(&path).unwrap());
+
+        set_locked(&path, false).unwrap();
+        assert!(!is_locked(&path).unwrap());
+    }
+
+    #[test]
+    fn a_file_that_is_not_json_is_refused_with_its_path() {
+        let folder = tempfile::tempdir().unwrap();
+        let path = folder.path().join("PersistedSettings.json");
+        std::fs::write(&path, "not json").unwrap();
+
+        let error = read(&path).unwrap_err();
+
+        assert!(error.contains("PersistedSettings.json"), "{error}");
+    }
+
+    #[test]
+    fn a_missing_file_is_an_error_not_a_panic() {
+        let folder = tempfile::tempdir().unwrap();
+        let path = folder.path().join("missing.json");
+
+        assert!(read(&path).is_err());
+        assert!(is_locked(&path).is_err());
+    }
+}
