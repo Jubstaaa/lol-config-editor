@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import Modal from '../../components/modal'
 import { orderTokens, tokenForButton, tokenForKey } from '../../lib/keybind/keys'
 import { labelOfChord } from '../../lib/keybind/keybind'
 
@@ -19,6 +20,10 @@ interface KeybindCaptureProps {
  * first version passed a fresh arrow to both add and remove for `contextmenu`,
  * which removed nothing — right-click stayed dead for the rest of the session
  * and another listener piled up each time the dialog opened.
+ *
+ * A press on the dialog's own buttons is a choice, not a binding: otherwise
+ * clicking Unbind or Cancel recorded `Button 1` and closed the dialog before
+ * the click landed.
  */
 export default function KeybindCapture({ label, onBind, onUnbind, onCancel }: KeybindCaptureProps) {
     const [held, setHeld] = useState<Chord>([])
@@ -52,6 +57,7 @@ export default function KeybindCapture({ label, onBind, onUnbind, onCancel }: Ke
         }
 
         const handleMouseDown = (moment: MouseEvent) => {
+            if (moment.target instanceof Element && moment.target.closest('[data-capture-action]')) return
             moment.preventDefault()
             add(tokenForButton(moment.button))
         }
@@ -79,33 +85,39 @@ export default function KeybindCapture({ label, onBind, onUnbind, onCancel }: Ke
     }, [add, onCancel, settle])
 
     return (
-        <div className='fixed inset-0 z-50 grid place-items-center bg-ink-900/80 p-6'>
-            <div className='w-full max-w-sm border border-gold-600/50 bg-ink-800 p-5 text-center shadow-2xl'>
-                <p className='text-[11px] tracking-[0.18em] text-gold-500 uppercase'>Press a key to bind</p>
-                <p className='mt-2 text-sm text-gold-300'>{label}</p>
+        <Modal
+            className='w-full max-w-sm border border-gold-600/50 bg-ink-800 p-5 text-center shadow-2xl'
+            keepOpenOnEscape
+            onClose={onCancel}
+        >
+            <Modal.Title className='text-[11px] tracking-[0.18em] text-gold-500 uppercase'>
+                Press a key to bind
+            </Modal.Title>
+            <Modal.Description className='mt-2 text-sm text-gold-300'>{label}</Modal.Description>
 
-                <p className='my-5 min-h-8 text-xl font-semibold text-gold-400'>
-                    {labelOfChord(held) || <span className='text-gold-600'>waiting…</span>}
-                </p>
+            <p className='my-5 min-h-8 text-xl font-semibold text-gold-400'>
+                {labelOfChord(held) || <span className='text-gold-500'>waiting…</span>}
+            </p>
 
-                <div className='flex justify-center gap-2'>
-                    <button
-                        type='button'
-                        className='border border-gold-600/50 px-3 py-1.5 text-xs text-gold-300 hover:border-gold-400'
-                        onClick={onUnbind}
-                    >
-                        Unbind
-                    </button>
-                    <button
-                        type='button'
-                        className='border border-gold-600/30 px-3 py-1.5 text-xs text-gold-500 hover:border-gold-500'
-                        onClick={onCancel}
-                    >
-                        Cancel
-                    </button>
-                </div>
-                <p className='mt-3 text-[11px] text-gold-600'>Esc closes this without changing anything.</p>
+            <div className='flex justify-center gap-2'>
+                <button
+                    type='button'
+                    data-capture-action
+                    className='border border-gold-600/50 px-3 py-1.5 text-xs text-gold-300 hover:border-gold-400'
+                    onClick={onUnbind}
+                >
+                    Unbind
+                </button>
+                <button
+                    type='button'
+                    data-capture-action
+                    className='border border-gold-600/30 px-3 py-1.5 text-xs text-gold-500 hover:border-gold-500'
+                    onClick={onCancel}
+                >
+                    Cancel
+                </button>
             </div>
-        </div>
+            <p className='mt-3 text-[11px] text-gold-500'>Esc closes this without changing anything.</p>
+        </Modal>
     )
 }

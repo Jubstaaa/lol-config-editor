@@ -33,6 +33,7 @@ const Group = ({ group, open, onToggle }: { group: HotkeyGroup; open: boolean; o
     <section className='border border-gold-600/25'>
         <button
             type='button'
+            aria-expanded={open}
             className='flex w-full items-center justify-between px-3 py-2 text-left hover:bg-ink-700/60'
             onClick={onToggle}
         >

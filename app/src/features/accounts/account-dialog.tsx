@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import Modal from '../../components/modal'
 import { accountName } from '../../lib/accounts/accounts'
 
 import type { Account, AccountEdit } from '../../lib/runtime/core.types'
@@ -16,7 +17,7 @@ interface AccountDialogProps {
 }
 
 const fieldClass =
-    'w-full border border-gold-600/40 bg-ink-900 px-2.5 py-1.5 text-gold-300 placeholder:text-gold-600 focus:border-gold-400'
+    'w-full border border-gold-600/40 bg-ink-900 px-2.5 py-1.5 text-gold-300 placeholder:text-gold-500 focus:border-gold-400'
 
 export default function AccountDialog({
     busy,
@@ -45,28 +46,28 @@ export default function AccountDialog({
     }
 
     return (
-        <div className='fixed inset-0 z-50 grid place-items-center bg-ink-900/80 p-6'>
+        <Modal className='w-full max-w-sm border border-gold-600/50 bg-ink-800 p-5' onClose={onCancel}>
             <form
-                className='w-full max-w-sm space-y-3 border border-gold-600/50 bg-ink-800 p-5'
+                className='space-y-3'
                 onSubmit={event => {
                     event.preventDefault()
                     handleSubmit()
                 }}
             >
-                <h2 className='text-sm font-semibold text-gold-400'>
+                <Modal.Title className='text-sm font-semibold text-gold-400'>
                     {account ? `Edit ${accountName(account)}` : 'Add the signed-in account'}
-                </h2>
+                </Modal.Title>
 
-                {account ? (
-                    <p className='text-[11px] text-gold-600'>
-                        {account.riotId ?? 'Riot ID not detected yet'}
-                    </p>
-                ) : (
-                    <p className='text-[11px] text-gold-600'>
-                        Sign in to the Riot Client with <b className='text-gold-500'>Stay signed in</b>{' '}
-                        checked, then save. The Riot ID and region are read from the client.
-                    </p>
-                )}
+                <Modal.Description className='text-[11px] text-gold-500'>
+                    {account ? (
+                        (account.riotId ?? 'Riot ID not detected yet')
+                    ) : (
+                        <>
+                            Sign in to the Riot Client with <b className='text-gold-400'>Stay signed in</b>{' '}
+                            checked, then save. The Riot ID and region are read from the client.
+                        </>
+                    )}
+                </Modal.Description>
 
                 <label className='block space-y-1 text-[11px] text-gold-500'>
                     <span>Label</span>
@@ -142,6 +143,6 @@ export default function AccountDialog({
                     </button>
                 </div>
             </form>
-        </div>
+        </Modal>
     )
 }
