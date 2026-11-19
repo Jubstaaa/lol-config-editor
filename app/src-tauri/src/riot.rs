@@ -338,3 +338,53 @@ pub async fn identity() -> Identity {
 
     Identity { riot_id, region }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn a_lockfile_names_the_port_and_password() {
+        let folder = tempfile::tempdir().unwrap();
+        let path = folder.path().join("lockfile");
+        std::fs::write(&path, "Riot Client:1234:51234:x:https\n").unwrap();
+
+        let api = Api::from_lockfile(&path).unwrap();
+
+        assert_eq!(api.port, 51234);
+        assert_eq!(api.password, "x");
+    }
+
+    #[test]
+    fn a_short_or_garbled_lockfile_is_ignored() {
+        let folder = tempfile::tempdir().unwrap();
+        let path = folder.path().join("lockfile");
+
+        std::fs::write(&path, "Riot Client:1234:51234").unwrap();
+        assert!(Api::from_lockfile(&path).is_none());
+
+        std::fs::write(&path, "Riot Client:1234:port:x:https").unwrap();
+        assert!(Api::from_lockfile(&path).is_none());
+
+        assert!(Api::from_lockfile(&folder.path().join("missing")).is_none());
+    }
+
+    #[test]
+    fn only_a_remembered_sign_in_counts_as_a_session() {
+        assert!(holds_session(
+            "riot-login:\n  persist:\n    session:\n      cookies:\n        - name: ssid"
+        ));
+        assert!(holds_session("rso:\n  refresh_token: abc"));
+        assert!(!holds_session("riot-login:\n  persist: {}"));
+    }
+
+    #[test]
+    fn a_riot_id_needs_a_name() {
+        let named = serde_json::json!({ "game_name": "Faker", "tag_line": "KR1" });
+        let nameless = serde_json::json!({ "game_name": "", "tag_line": "KR1" });
+
+        assert_eq!(riot_id_of(&named).as_deref(), Some("Faker#KR1"));
+        assert_eq!(riot_id_of(&nameless), None);
+        assert_eq!(riot_id_of(&serde_json::json!({})), None);
+    }
+}

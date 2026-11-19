@@ -77,3 +77,17 @@ pub async fn apply_and_reconnect(settings: &Path, values: &serde_json::Value) ->
     }
     Ok(locked)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn the_client_lockfile_sits_in_the_install_folder() {
+        let settings = Path::new("/Games/League of Legends/Config/PersistedSettings.json");
+        assert_eq!(
+            client_lockfile(settings),
+            Some(PathBuf::from("/Games/League of Legends/lockfile"))
+        );
+    }
+}

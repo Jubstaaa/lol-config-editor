@@ -12,13 +12,18 @@ pub struct Profile {
 
 /// A file name that cannot escape the profiles folder. The renderer is not
 /// trusted with a path: it sends a name, and only a name survives this.
+///
+/// Windows rules apply on every platform, so a profile saved on a Mac still
+/// opens on Windows: no separators or reserved characters, no device names
+/// like `CON`, no control characters, and no leading dots or trailing spaces.
 fn file_name_for(name: &str) -> Answer<String> {
-    let trimmed = name.trim();
-    let cleaned: String = trimmed
-        .chars()
-        .filter(|letter| !matches!(letter, '/' | '\\' | ':' | '*' | '?' | '"' | '<' | '>' | '|'))
-        .collect();
-    let cleaned = cleaned.trim_matches(['.', ' ']).to_owned();
+    let options = sanitize_filename::Options {
+        windows: true,
+        truncate: true,
+        replacement: "",
+    };
+    let cleaned = sanitize_filename::sanitize_with_options(name.trim(), options);
+    let cleaned = cleaned.trim_matches(['.', ' ']);
 
     if cleaned.is_empty() {
         return Err("that name has nothing usable in it".into());
@@ -78,4 +83,70 @@ pub fn delete(folder: &Path, name: &str) -> Answer<()> {
     }
 
     std::fs::remove_file(&path).map_err(|error| format!("could not delete the profile: {error}"))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn a_name_cannot_climb_out_of_the_profiles_folder() {
+        assert_eq!(file_name_for("../../evil").unwrap(), "evil.json");
+        assert_eq!(file_name_for(r"..\..\evil").unwrap(), "evil.json");
+        assert_eq!(
+            file_name_for("C:/Windows/evil").unwrap(),
+            "CWindowsevil.json"
+        );
+    }
+
+    #[test]
+    fn characters_windows_forbids_are_dropped() {
+        assert_eq!(
+            file_name_for(r#"a<b>c:d"e|f?g*h"#).unwrap(),
+            "abcdefgh.json"
+        );
+    }
+
+    #[test]
+    fn a_name_with_nothing_usable_is_refused() {
+        assert!(file_name_for("").is_err());
+        assert!(file_name_for(" . ").is_err());
+        assert!(file_name_for("///").is_err());
+    }
+
+    #[test]
+    fn device_names_windows_reserves_are_refused() {
+        for reserved in ["CON", "nul", "Com1", "LPT9", "aux"] {
+            assert!(file_name_for(reserved).is_err(), "{reserved} was accepted");
+        }
+    }
+
+    #[test]
+    fn control_characters_are_dropped() {
+        assert_eq!(file_name_for("ranked\u{0}\u{7}").unwrap(), "ranked.json");
+    }
+
+    #[test]
+    fn save_list_read_delete_round_trip() {
+        let folder = tempfile::tempdir().unwrap();
+        let settings = serde_json::json!({ "files": [] });
+
+        let saved = save(folder.path(), "Ranked", &settings).unwrap();
+        save(folder.path(), "aram", &settings).unwrap();
+
+        assert_eq!(saved.name, "Ranked");
+        let names: Vec<String> = list(folder.path()).into_iter().map(|p| p.name).collect();
+        assert_eq!(names, ["aram", "Ranked"]);
+        assert_eq!(read(folder.path(), "Ranked").unwrap(), settings);
+
+        delete(folder.path(), "Ranked").unwrap();
+        assert!(delete(folder.path(), "Ranked").is_err());
+        assert_eq!(list(folder.path()).len(), 1);
+    }
+
+    #[test]
+    fn listing_a_folder_that_does_not_exist_is_empty() {
+        let folder = tempfile::tempdir().unwrap();
+        assert!(list(&folder.path().join("nope")).is_empty());
+    }
 }
